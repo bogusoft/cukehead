@@ -1,0 +1,13 @@
+----------------------------------------------------------------------
+[2010-04-27]
+
+Created project tree using newgem and removed a few things it made 
+such as LICENSE (add one later), TODO (I'll use Notes.txt instead),
+'scripts' directory. 
+
+I edited the Rakefile but I don't know that I'll be actually building
+a gem with this.
+
+
+----------------------------------------------------------------------
+
