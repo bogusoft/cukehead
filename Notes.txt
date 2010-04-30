@@ -8,6 +8,10 @@ such as LICENSE (add one later), TODO (I'll use Notes.txt instead),
 I edited the Rakefile but I don't know that I'll be actually building
 a gem with this.
 
+[2010-04-30]
+
+Added 'features' directory and started feature_reader.feature. 
+Obviously I am not yet a cukehead. I'm having trouble writing it.
 
 ----------------------------------------------------------------------
 
