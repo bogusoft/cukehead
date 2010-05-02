@@ -2,7 +2,7 @@
 #require 'rake/gempackagetask'
 #require 'rubygems/specification'
 #require 'date'
-#require 'spec/rake/spectask'
+require 'spec/rake/spectask'
 require 'rake/testtask'
 
 #spec = Gem::Specification.new do |s|
@@ -29,11 +29,11 @@ require 'rake/testtask'
 
 #task :default => :spec
 
-#desc "Run specs"
-#Spec::Rake::SpecTask.new do |t|
-#  t.spec_files = FileList['spec/**/*_spec.rb']
-#  t.spec_opts = %w(-fs --color)
-#end
+desc "Run specs"
+Spec::Rake::SpecTask.new do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.spec_opts = %w(-fs --color)
+end
 
 
 #Rake::GemPackageTask.new(spec) do |pkg|
@@ -53,7 +53,7 @@ require 'rake/testtask'
 #end
 
 
-task :default => :unit_tests
+task :default => [:unit_tests, :spec]
 
 desc "run unit tests"
 Rake::TestTask.new("unit_tests") {|t|

@@ -13,6 +13,10 @@ class FreemindBuilder
     end
   end
   
+  def add_feature(feature, filename)
+    # *!*
+  end
+  
   def xml
     @mmdoc.to_s
   end
