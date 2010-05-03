@@ -31,9 +31,9 @@ describe "FreemindBuilder" do
   
   it "should save the path to the features directory" do
     #builder = FreemindBuilder.new
-    filename = '/tmp/some.feature'
+    filename = '/tmp/features/some.feature'
     @builder.add_features_path filename
-    @builder.features_path_text.should match /^\[path:.*some\.feature\]/
+    @builder.features_path_text.should match "[path: /tmp/features]"
   end
   
   it "should create new XML node element with text, color, and folded attributes" do
