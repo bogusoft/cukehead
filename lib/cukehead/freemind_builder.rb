@@ -2,7 +2,6 @@ require 'rexml/document'
 
 class FreemindBuilder
 
-  #DEFAULT_XML = "<map version=\"0.7.1\">\n<node TEXT=\"New mind map\">\n</node>\n</map>"
   DEFAULT_XML = "<map version='0.7.1'><node TEXT='New mind map'></node></map>"
   COLOR_FEATURE = '#0000ff'
   COLOR_BACKGROUND = '#ff0000'
@@ -33,7 +32,6 @@ class FreemindBuilder
   end
 
   def new_italic_font_element
-    # <font ITALIC="true" NAME="SansSerif" SIZE="12"/>
     e = REXML::Element.new "font"
     e.add_attribute 'ITALIC', "true"
     e.add_attribute 'NAME', "SansSerif"
@@ -53,7 +51,6 @@ class FreemindBuilder
     node = @mmdoc.root.elements[1]
     e = new_node_element "Cucumber features:"
     node.add_element e
-    #$stderr.puts "DEBUG: add_cucumber_features_node: " + e.to_s
     return e
   end
 
@@ -84,7 +81,6 @@ class FreemindBuilder
   def new_feature_node(title)
     e = new_node_element title.strip, COLOR_FEATURE, FOLD_FEATURE
     e.add_element new_bold_font_element
-    #new_node = @features_node.add_element e
     @features_node.add_element e
   end
 
@@ -94,9 +90,9 @@ class FreemindBuilder
     e = new_node_element feature_filename_text(filename), COLOR_SYSTEM
     e.add_attribute 'LINK', filename
     new_node.add_element e
-    unless section.tags.empty? new_node.add_element(
-      new_node_element('Tags: ' + tags.join(' '), COLOR_TAGS)
-    )
+    unless section.tags.empty? 
+      new_node.add_element(new_node_element('Tags: ' + tags.join(' '), COLOR_TAGS))
+    end  
     section.lines.each do |line|
       el = new_node_element line.strip, COLOR_FEATURE
       if line =~ /^\ *(As\ |In\ |I\ ).*$/
