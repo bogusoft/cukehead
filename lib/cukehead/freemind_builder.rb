@@ -94,6 +94,9 @@ class FreemindBuilder
     e = new_node_element feature_filename_text(filename), COLOR_SYSTEM
     e.add_attribute 'LINK', filename
     new_node.add_element e
+    unless section.tags.empty? new_node.add_element(
+      new_node_element('Tags: ' + tags.join(' '), COLOR_TAGS)
+    )
     section.lines.each do |line|
       el = new_node_element line.strip, COLOR_FEATURE
       if line =~ /^\ *(As\ |In\ |I\ ).*$/
