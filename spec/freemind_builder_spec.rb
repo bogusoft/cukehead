@@ -75,4 +75,16 @@ describe "FreemindBuilder" do
     @builder.xml.should match /.*Test feature.*Background:.*\@test.*thingy.*/     
   end
   
+  it "should add a Scenario section to the current feature" do
+    feature = FeatureSection.new "Feature: Test feature"
+    @builder.add_feature feature, "test.feature"
+    sc = FeatureSection.new "Scenario: Test a scenario"
+    sc.add_line "Given I am a scenario section"
+    sc.add_line "When I am added to a FreemindBuilder"
+    sc.add_line "Then I should see myself in the output."
+    sc.tags << "@test"    
+    @builder.add_scenario sc
+    @builder.xml.should match /.*Test feature.*Scenario:.*\@test.*in the output.*/     
+  end
+  
 end
