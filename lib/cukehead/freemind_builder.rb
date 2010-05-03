@@ -91,7 +91,7 @@ class FreemindBuilder
     e.add_attribute 'LINK', filename
     new_node.add_element e
     unless section.tags.empty? 
-      new_node.add_element(new_node_element('Tags: ' + tags.join(' '), COLOR_TAGS))
+      new_node.add_element(new_node_element('Tags: ' + section.tags.join(' '), COLOR_TAGS))
     end  
     section.lines.each do |line|
       el = new_node_element line.strip, COLOR_FEATURE
@@ -105,6 +105,22 @@ class FreemindBuilder
     @current_feature = new_node
   end
   
+  def add_background(section)
+    new_node = @current_feature.add_element(new_node_element(section.title.strip, COLOR_BACKGROUND, FOLD_BACKGROUND))
+    unless section.tags.empty? 
+      new_node.add_element(new_node_element('Tags: ' + section.tags.join(' '), COLOR_TAGS))
+    end  
+    section.lines.each do |line|
+      el = new_node_element line.strip, COLOR_BACKGROUND
+      if line =~ /^\ *(Given\ |When\ |Then\ |And\ |But\ ).*$/
+        el.add_element new_bold_font_element
+      else
+        el.add_element new_italic_font_element
+      end
+      new_node.add_element el
+    end
+  end
+
   def xml
     @mmdoc.to_s
   end

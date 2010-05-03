@@ -22,11 +22,11 @@ describe "FreemindBuilder" do
     xml = b.xml
     doc = REXML::Document.new(xml)
     doc.should_not be_nil
-    #puts doc.to_s
-    #node = REXML::XPath.first(@doc, '//node[attribute::TEXT="A child node"]')
-    #node.should_not be_nil
-    #child = node.elements.first
-    #child.to_s.should match /.*Cucumber features:.*/
+    node = REXML::XPath.first(doc, '//node[attribute::TEXT="A child node"]')
+    node.should_not be_nil
+    child = node.elements.first
+    #puts child.to_s
+    child.to_s.should match /.*Cucumber features:.*/
   end
   
   it "should save the path to the features directory" do
@@ -50,8 +50,29 @@ describe "FreemindBuilder" do
     feature = FeatureSection.new
     feature.title = "Feature: Test feature"
     filename = "test.feature"
-    #builder = FreemindBuilder.new
     @builder.add_feature feature, filename
     @builder.xml.should match /.*Test feature.*/ 
   end
+  
+  it "should include lines and tags attributes in the XML output" do
+    feature = FeatureSection.new "Feature: Test feature"
+    feature.add_line "As a test"
+    feature.add_line "I want to add some lines of text"
+    feature.add_line "In order to make sure I can"
+    feature.tags << "@test"
+    @builder.add_feature feature, "test.feature"
+    @builder.xml.should match /.*Test feature.*\@test.*As a test.*/ 
+  end
+  
+  it "should add a Background section to the current feature" do
+    feature = FeatureSection.new "Feature: Test feature"
+    @builder.add_feature feature, "test.feature"
+    bg = FeatureSection.new "Background:"
+    bg.add_line "Given this thingy"
+    bg.add_line "And that other thingy"
+    bg.tags << "@test"    
+    @builder.add_background bg
+    @builder.xml.should match /.*Test feature.*Background:.*\@test.*thingy.*/     
+  end
+  
 end

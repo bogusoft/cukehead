@@ -24,10 +24,10 @@ describe "FeatureSection" do
     @section.tags.should == a
   end
   
-#  it "should have a 'filename' attribute" do
-#    s = "test.feature"
-#    @section.filename = s
-#    @section.filename.should == s
-#  end
+  it "should take the title as a parameter when creating a new instance" do
+    s = "A feature section"
+    section = FeatureSection.new s
+    section.title.should == s
+  end
   
 end

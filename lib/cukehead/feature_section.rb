@@ -5,8 +5,8 @@ class FeatureSection
   attr_reader :lines
   attr_accessor :tags
 
-  def initialize()
-    @title = ''
+  def initialize(title = '')
+    @title = title
     @lines = []
     @tags = []
   end
