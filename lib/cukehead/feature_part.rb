@@ -1,6 +1,6 @@
 
 
-class FeatureSection
+class FeaturePart
   attr_accessor :title
   attr_reader :lines
   attr_accessor :tags

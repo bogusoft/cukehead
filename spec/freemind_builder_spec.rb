@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
-require 'cukehead/feature_section'
+require 'cukehead/feature_part'
 require 'cukehead/freemind_builder'
 
 describe "FreemindBuilder" do
@@ -47,7 +47,7 @@ describe "FreemindBuilder" do
   end
   
   it "should add a feature and specify the name of the file it is from" do
-    feature = FeatureSection.new
+    feature = FeaturePart.new
     feature.title = "Feature: Test feature"
     filename = "test.feature"
     @builder.add_feature feature, filename
@@ -55,7 +55,7 @@ describe "FreemindBuilder" do
   end
   
   it "should include lines and tags attributes in the XML output" do
-    feature = FeatureSection.new "Feature: Test feature"
+    feature = FeaturePart.new "Feature: Test feature"
     feature.add_line "As a test"
     feature.add_line "I want to add some lines of text"
     feature.add_line "In order to make sure I can"
@@ -64,10 +64,10 @@ describe "FreemindBuilder" do
     @builder.xml.should match /.*Test feature.*\@test.*As a test.*/ 
   end
   
-  it "should add a Background section to the current feature" do
-    feature = FeatureSection.new "Feature: Test feature"
+  it "should add a Background part to the current feature" do
+    feature = FeaturePart.new "Feature: Test feature"
     @builder.add_feature feature, "test.feature"
-    bg = FeatureSection.new "Background:"
+    bg = FeaturePart.new "Background:"
     bg.add_line "Given this thingy"
     bg.add_line "And that other thingy"
     bg.tags << "@test"    
@@ -76,10 +76,10 @@ describe "FreemindBuilder" do
   end
   
   it "should add a Scenario section to the current feature" do
-    feature = FeatureSection.new "Feature: Test feature"
+    feature = FeaturePart.new "Feature: Test feature"
     @builder.add_feature feature, "test.feature"
-    sc = FeatureSection.new "Scenario: Test a scenario"
-    sc.add_line "Given I am a scenario section"
+    sc = FeaturePart.new "Scenario: Test a scenario"
+    sc.add_line "Given I am a scenario part"
     sc.add_line "When I am added to a FreemindBuilder"
     sc.add_line "Then I should see myself in the output."
     sc.tags << "@test"    

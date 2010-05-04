@@ -1,18 +1,18 @@
-require 'cukehead/feature_section'
+require 'cukehead/feature_part'
 
 class FeatureFileSection
 
   def initialize(builder, title)
     @builder = builder
-    @section = FeatureSection.new title    
+    @part = FeaturePart.new title    
   end
 
   def add(line)
-    @section.add_line(line)
+    @part.add_line(line)
   end
 
   def set_tags(tags)
-    @section.tags = tags.clone
+    @part.tags = tags.clone
   end
   
   def finish
@@ -30,22 +30,26 @@ class FeatureSection < FeatureFileSection
   end
 
   def finish
-    @builder.add_feature(@parts, @feature_filename)
+    @builder.add_feature(@part, @feature_filename)
   end
 
 end
 
 
 class BackgroundSection < FeatureFileSection
+  
   def finish
-    @builder.add_feature_background(@parts)
+    @builder.add_feature_background(@part)
   end
+  
 end
 
 
 class ScenarioSection < FeatureFileSection
+  
   def finish
-    @builder.add_feature_scenario(@parts)
+    @builder.add_feature_scenario(@part)
   end
+  
 end
 
