@@ -1,0 +1,3 @@
+default=
+spec=Run specs
+unit_tests=Run tests for unit_tests
