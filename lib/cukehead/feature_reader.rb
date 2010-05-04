@@ -5,6 +5,7 @@ class FeatureReader
   def initialize
     @builder = FreemindBuilder.new
   end
+
   
   def extract_features(filename, text)
     @section = nil
@@ -52,6 +53,7 @@ class FeatureReader
     end
     @section.finish unless @section == nil
   end
+
   
   def freemind_xml
     @builder.xml

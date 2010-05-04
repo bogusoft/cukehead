@@ -7,6 +7,7 @@ class FreemindWriter
     return t
   end
 
+
   def write_mm(filename, mmxml)
     s = add_newline_after_tags mmxml
     File.open(filename, 'w') do |f|
