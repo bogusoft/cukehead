@@ -14,7 +14,7 @@ module Cukehead
       in_literal_text = false
       literal_text = ''
       tags = []
-      text.each_line do |line|
+      text.each do |line|
         s = line.strip
         #$stderr.puts "DEBUG: LINE='#{s}'"
         if s == '"""'

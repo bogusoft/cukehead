@@ -41,7 +41,7 @@ module Cukehead
   class BackgroundSection < FeatureFileSection
 
     def finish
-      @builder.add_feature_background(@part)
+      @builder.add_background(@part)
     end
 
   end
@@ -50,7 +50,7 @@ module Cukehead
   class ScenarioSection < FeatureFileSection
 
     def finish
-      @builder.add_feature_scenario(@part)
+      @builder.add_scenario(@part)
     end
 
   end

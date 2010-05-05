@@ -9,11 +9,11 @@ class FakeFreemindBuilder
     @filename = filename    
   end
   
-  def add_feature_background(part)
+  def add_background(part)
     @part = part
   end
   
-  def add_feature_scenario(part)
+  def add_scenario(part)
     @part = part
   end
   
