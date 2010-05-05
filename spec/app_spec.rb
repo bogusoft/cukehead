@@ -3,19 +3,21 @@ require 'cukehead/app'
 
 describe "Cukehead application" do
   before do
+    @features_dir = File.dirname(__FILE__) + '/../testdata/project1/features'
+    File.directory?(@features_dir).should be_true
+    File.directory?($testing_tmp).should be_true
     @app = Cukehead::App.new
   end
 
   it "reads a set of Cucumber features and create a FreeMind mind map" do
-    source = File.dirname(__FILE__) + '/../testdata/project1/features'
+    @app.features_path = @features_dir
     target = File.join $testing_tmp, 'app_spec_test.mm'
-    File.directory?(source).should be_true
-    @app.features_path = source
     File.delete target if File.exists? target
     File.exists?(target).should be_false
     @app.mindmap_filename = target
     @app.read_features 
-    @app.write_mindmap
+    result = @app.write_mindmap
+    result.should be_true
     File.exists?(target).should be_true
   end
 
@@ -45,10 +47,34 @@ describe "Cukehead application" do
     
   end
 
+  it "does not overwrite an existing mind map file" do
+    @app.features_path = @features_dir
+    target = File.join $testing_tmp, 'app_spec_test.mm'
+    @app.mindmap_filename = target
+    File.open(target, 'w') {|f| f.write("###")}
+    File.exists?(target).should be_true
+    @app.read_features
+    @app.write_mindmap
+    File.open(target, 'r') {|f|
+      s = f.readline
+      s.should match "###"
+    }
+  end
 
-  it "does not overwrite an existing mind map file"
-
-  it "accepts an overwrite option that allows it to replace an exiting mind map file"
+  it "accepts an overwrite option that allows it to replace an exiting mind map file" do
+    @app.features_path = @features_dir
+    target = File.join $testing_tmp, 'app_spec_test.mm'
+    @app.mindmap_filename = target
+    File.open(target, 'w') {|f| f.write("###")}
+    File.exists?(target).should be_true
+    @app.read_features
+    @app.do_overwrite = true
+    @app.write_mindmap
+    File.open(target, 'r') {|f|
+      s = f.readline
+      s.should_not match "###"
+    }
+  end
 
   it "accepts an optional file name of an existing mind map"
 
