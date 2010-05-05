@@ -1,17 +1,20 @@
+module Cukehead
 
+  class FeaturePart
+    attr_accessor :title
+    attr_reader :lines
+    attr_accessor :tags
 
-class FeaturePart
-  attr_accessor :title
-  attr_reader :lines
-  attr_accessor :tags
+    def initialize(title = '')
+      @title = title
+      @lines = []
+      @tags = []
+    end
 
-  def initialize(title = '')
-    @title = title
-    @lines = []
-    @tags = []
+    def add_line(line)
+      @lines << line if line.strip.length > 0
+    end
   end
 
-  def add_line(line)
-    @lines << line if line.strip.length > 0
-  end
 end
+

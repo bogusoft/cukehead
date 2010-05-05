@@ -3,4 +3,6 @@
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
 require 'cukehead'
 
-#*!* More code please...
+app = CukeHead::App.new
+app.run
+

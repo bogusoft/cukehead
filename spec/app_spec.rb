@@ -5,7 +5,9 @@ describe "Cukehead application" do
 
   it "reads a set of Cucumber features and create a FreeMind mind map"
 
-  it "looks for feature files in a 'features' sub-directory of the current directory by default"
+  it "looks for feature files in a 'features' sub-directory of the current directory by default" do
+    app = cukehead_app.new
+  end
 
   it "accepts a features path to specify where to look for feature files"
 
