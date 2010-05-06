@@ -1,4 +1,5 @@
 require 'cukehead/freemind_builder'
+require 'cukehead/feature_file_section'
 
 module Cukehead
 

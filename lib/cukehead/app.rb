@@ -1,3 +1,8 @@
+require 'getoptlong'
+require 'fileutils'
+require 'cukehead/feature_reader'
+require 'cukehead/freemind_writer'
+
 module Cukehead
 
   class App
@@ -44,8 +49,39 @@ module Cukehead
     end
 
 
-    def run
+    def get_options
+      mm = ''
+      fp = ''
+      opts = GetoptLong.new(
+        ['--overwrite', '-o', GetoptLong::NO_ARGUMENT],
+        ['--mm-filename', '-m', GetoptLong::REQUIRED_ARGUMENT],
+        ['--features-path', '-p', GetoptLong::REQUIRED_ARGUMENT]
+      )
+      opts.each do |opt, arg|
+        case
+          when opt == '--overwrite' then @do_overwrite = true
+          when opt == '--mm-filename' then mm = arg
+          when opt == '--features-path' then fp = arg
+        end
+      end
 
+      # If features path or mindmap file name was not specified
+      # in option arguments then infer them from any remaining
+      # command line arguments. Specific option takes precidence.
+      ARGV.each do |a|
+        fp = a if fp.empty? and a.slice(-9, 9) == '/features'
+        mm = a if mm.empty? and a.slice(-3, 3) == '.mm'
+      end
+
+      @features_path = fp unless fp.empty?
+      @mindmap_filename = mm unless mm.empty?
+    end
+
+
+    def run
+      get_options
+      read_features
+      write_mindmap
     end
 
   end
