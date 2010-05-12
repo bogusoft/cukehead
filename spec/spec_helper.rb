@@ -1,7 +1,10 @@
 $TESTING=true
+
 $:.push File.join(File.dirname(__FILE__), '..', 'lib')
 
-$testing_tmp = File.expand_path(File.join(File.dirname(__FILE__), "..", "tmp"))
+$testing_tmp = File.expand_path(File.join(File.dirname(__FILE__), '..', 'tmp'))
+
+$cukehead_bin = File.expand_path(File.join(File.dirname(__FILE__), '..', 'bin', 'cukehead'))
 
 class FakeFreemindBuilder
   def add_feature(part, filename)

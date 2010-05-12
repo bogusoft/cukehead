@@ -8,20 +8,35 @@ module Cukehead
   class App
     attr_accessor :features_path
     attr_accessor :mindmap_filename
+    attr_accessor :source_mindmap_filename
     attr_accessor :do_overwrite
     attr_reader :errors
 
     def initialize
       @features_path = File.join(Dir.getwd, 'features')
-      @mindmap_filename = File.join(Dir.getwd, 'mm', 'cukehead.mm')
+      @mindmap_filename = File.join(Dir.getwd, 'mm', 'cukehead-output.mm')
+      @source_mindmap_filename = ''
       @reader = nil
       @do_overwrite = false
       @errors = []
     end
 
 
+    def get_source_xml
+      if @source_mindmap_filename.empty?
+        nil
+      else
+        text = nil
+        File.open(@source_mindmap_filename, 'r') {|f|
+          text = f.readlines
+        }
+        text.join
+      end
+    end
+
+
     def read_features
-      @reader = FeatureReader.new
+      @reader = FeatureReader.new get_source_xml
       search_path = File.join @features_path, '*.feature'
       Dir[search_path].each {|filename|
         File.open(filename, 'r') {|f|
@@ -31,7 +46,7 @@ module Cukehead
       }
     end
 
-    
+
     def write_mindmap
       if @reader.nil?
         @errors << "No features to write (perhaps read_features has not been called)"

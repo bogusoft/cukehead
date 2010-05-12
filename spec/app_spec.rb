@@ -3,7 +3,8 @@ require 'cukehead/app'
 
 describe "Cukehead application" do
   before do
-    @features_dir = File.dirname(__FILE__) + '/../testdata/project1/features'
+    @testdata_dir = File.dirname(__FILE__) + '/../testdata'
+    @features_dir = @testdata_dir + '/project1/features'
     File.directory?(@features_dir).should be_true
     File.directory?($testing_tmp).should be_true
     @app = Cukehead::App.new
@@ -31,8 +32,8 @@ describe "Cukehead application" do
     @app.features_path.should match dir
   end
 
-  it "creates 'cukehead.mm' in a 'mm' sub-directory of the current directory by default" do
-    @app.mindmap_filename.should match Dir.getwd + '/mm/cukehead.mm'
+  it "creates 'cukehead-output.mm' in a 'mm' sub-directory of the current directory by default" do
+    @app.mindmap_filename.should match Dir.getwd + '/mm/cukehead-output.mm'
   end
 
   it "accepts a mind map file name to override the default" do
@@ -76,8 +77,32 @@ describe "Cukehead application" do
     }
   end
 
-  it "accepts an optional file name of an existing mind map"
+  it "accepts an optional file name of an existing mind map" do
+    @app.source_mindmap_filename = 'test.mm'
+  end
 
-  it "adds feature nodes under an existing 'Cucumber features:' node"
+  it "adds feature nodes under an existing 'Cucumber features:' node" do
+    @app.features_path = @features_dir
+    target = File.join $testing_tmp, 'app_spec_insert_test.mm'
+    @app.mindmap_filename = target
+    source_mm = File.join(@testdata_dir, 'insert_test.mm')
+    @app.source_mindmap_filename = source_mm
+    @app.read_features
+    @app.do_overwrite = true
+    @app.write_mindmap
+    mm = ''
+    File.open(target, 'r') {|f|
+      mm = f.readlines
+    }
+    # *!* Wow. This spec is ugly. There must be a better way.
+    doc = REXML::Document.new(mm.join)
+    doc.should_not be_nil
+    node = REXML::XPath.first(doc, '//node[attribute::TEXT="Here"]')
+    node.should_not be_nil
+    child = node.elements.first
+    child.to_s.should match /.*Cucumber features:.*/
+    grandchild = child.elements[2]
+    grandchild.to_s.should match /.*Test feature.*/
+  end
 
 end

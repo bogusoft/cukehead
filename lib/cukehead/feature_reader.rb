@@ -5,8 +5,8 @@ module Cukehead
 
   class FeatureReader
 
-    def initialize
-      @builder = FreemindBuilder.new
+    def initialize(mm_xml = nil)
+      @builder = FreemindBuilder.new(mm_xml)
     end
 
 

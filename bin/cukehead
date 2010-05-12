@@ -5,4 +5,3 @@ require 'cukehead'
 
 app = Cukehead::App.new
 app.run
-
