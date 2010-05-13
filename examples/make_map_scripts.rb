@@ -1,5 +1,17 @@
 #!/usr/bin/env ruby
 
+#----------------------------------------------------------------------
+# This script walks a projects directory tree and creates a shell
+# script for each 'features' directory found. It uses the name of
+# the directory containing the features directory as the project 
+# name. It writes the shell script files to tmp/map-(projectname).sh.
+# It stops traversing a project branch when the first 'features'
+# directory is found so if a project has sub-directories below that
+# containing more 'features' directories those will not be included.
+# This is not an example of using cukehead in itself but the resulting
+# shell scripts are.
+#----------------------------------------------------------------------
+
 class CukeheadMapScripter
 
   def initialize
