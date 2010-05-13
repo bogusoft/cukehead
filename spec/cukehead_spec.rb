@@ -10,12 +10,12 @@ describe "cukehead" do
     #puts "DEBUG: #{$cukehead_bin}"
     result = `#{$cukehead_bin}`
     #puts "DEBUG: result='#{result}'"
-    result.should match /.*USAGE.*/
+    result.should match /.*Usage:.*/
   end
 
   it "should display a help message if '--help' command line argument is given" do
     result = `#{$cukehead_bin} --help`
-    result.should match /.*USAGE.*/
+    result.should match /.*Usage:.*/
   end
 
   it "should read features and create a mind map if 'map' command line argument is given" do

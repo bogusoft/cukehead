@@ -105,13 +105,27 @@ module Cukehead
 
 
     def show_help
-      puts "USAGE: cukehead command [options]"
-      puts "Where:"
-      puts "  command: 'map' - Read features and create a FreeMind mind map file."
-      puts "  options:"
-      puts "  -o, --overwrite = Overwrite existing output file."
-      puts "  -m, --mm-filename <filename> = Name of output file."
-      puts "  -m, --features-path <path> = Name of directory containing feature files."
+      text = <<EOT
+
+Usage: cukehead command [options]
+
+command:  
+  map
+      Read features and create a FreeMind mind map file.
+
+options:
+  -o or --overwrite
+      Overwrite existing output file.
+
+  -m FILENAME or --mm-filename FILENAME
+      Specify name of output file (default is mm/cukehead-output.mm).
+
+  -p PATH or --features-path PATH
+      Specify directory containing feature files to read
+      (default is directory named 'features' in current directory).
+
+EOT
+      puts text
     end
 
 
