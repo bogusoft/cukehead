@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-#
+
 
 def usage
   puts <<xxx
