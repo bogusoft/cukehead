@@ -104,8 +104,16 @@ module Cukehead
     end
 
 
+    def show_errors
+      unless @errors.empty?
+        puts "Errors:"
+        @errors.each {|err| puts err}
+      end
+    end
+
+
     def show_help
-      text = <<EOT
+      puts <<xxx
 
 Usage: cukehead command [options]
 
@@ -124,8 +132,12 @@ options:
       Specify directory containing feature files to read
       (default is directory named 'features' in current directory).
 
-EOT
-      puts text
+  -s FILENAME or --source-mm FILENAME
+      Specify a FreeMind mind map file to use as a template for creating
+      the output file. If the template contains a node with the text
+      'Cucumber features:' then the feature nodes will be inserted there.
+
+xxx
     end
 
 
@@ -134,6 +146,7 @@ EOT
       if @command == 'map'
         read_features
         write_mindmap
+        show_errors
       else
         show_help
       end

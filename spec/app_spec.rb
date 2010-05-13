@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 require 'cukehead/app'
 
 describe "Cukehead application" do
+
   before do
     @testdata_dir = File.dirname(__FILE__) + '/../testdata'
     @features_dir = @testdata_dir + '/project1/features'
