@@ -6,13 +6,13 @@ module Cukehead
   describe "FeatureWriter" do
 
     before do
-      # Create a hash of filename => featuretext.
       @features = {
         "test1.feature" => "Feature: Test 1",
         "test2.feature" => "Feature: Test 2"
       }
       @writer = FeatureWriter.new
-      @outdir = File.join($testing_tmp, 'features')
+      @outdir = File.join($testing_tmp, 'feature_writer_test', 'features')
+      FileUtils.remove_dir(@outdir) if File.directory? @outdir
     end
 
 
@@ -35,11 +35,12 @@ module Cukehead
 
     it "does not overwrite existing files by default" do
       fn = File.join(@outdir, 'test1.feature')
+      FileUtils.mkdir_p @outdir
       File.open(fn, 'w') {|f| f.write('###')}
       File.exists?(fn).should be_true
       @writer.output_path = @outdir
       @writer.write_features(@features)
-      @writer.errors.empty? should be_false
+      @writer.errors.should have(1).items
       File.open(fn, 'r') {|f|
         s = f.readline
         s.should match "###"
@@ -47,11 +48,25 @@ module Cukehead
     end
 
 
-    it "has an overwrite attribute that can be set"
+    it "has an overwrite attribute that can be set" do
+      @writer.overwrite = true
+    end
 
 
-    it "overwrites existing files if the overwrite attrubute is set to true"
-
+    it "overwrites existing files if the overwrite attrubute is set to true" do
+      fn = File.join(@outdir, 'test1.feature')
+      FileUtils.mkdir_p @outdir
+      File.open(fn, 'w') {|f| f.write('###')}
+      File.exists?(fn).should be_true
+      @writer.output_path = @outdir
+      @writer.overwrite = true
+      @writer.write_features(@features)
+      @writer.errors.should have(0).items
+      File.open(fn, 'r') {|f|
+        s = f.readline
+        s.should match "Feature: Test 1"
+      }
+    end
 
   end
 
