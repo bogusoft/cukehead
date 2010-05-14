@@ -52,5 +52,14 @@ describe "cukehead" do
     }
   end
   
+  it "complains about unknown command line options." do
+    result = run_cukehead '--unknown-option'
+    result.should match /.*error.*unrecognized.*/im
+  end
+
+  it "complains about unknown command line arguments." do
+    result = run_cukehead 'UnknownArgument'
+    result.should match /.*error.*unknown.*/im
+  end
 
 end

@@ -70,32 +70,39 @@ module Cukehead
     def get_options
       mm = ''
       fp = ''
-      opts = GetoptLong.new(
-        ['--help', '-h', GetoptLong::NO_ARGUMENT],
-        ['--overwrite', '-o', GetoptLong::NO_ARGUMENT],
-        ['--mm-filename', '-m', GetoptLong::REQUIRED_ARGUMENT],
-        ['--features-path', '-p', GetoptLong::REQUIRED_ARGUMENT],
-        ['--source-mm', '-s', GetoptLong::REQUIRED_ARGUMENT]
-      )
-      opts.each do |opt, arg|
-        case
-          when opt == '--help' then @command = 'help'
-          when opt == '--overwrite' then @do_overwrite = true
-          when opt == '--mm-filename' then mm = arg
-          when opt == '--features-path' then fp = arg
-          when opt == '--source-mm' then @source_mindmap_filename = arg
+      begin
+        opts = GetoptLong.new(
+          ['--help', '-h', GetoptLong::NO_ARGUMENT],
+          ['--overwrite', '-o', GetoptLong::NO_ARGUMENT],
+          ['--mm-filename', '-m', GetoptLong::REQUIRED_ARGUMENT],
+          ['--features-path', '-p', GetoptLong::REQUIRED_ARGUMENT],
+          ['--source-mm', '-s', GetoptLong::REQUIRED_ARGUMENT]
+        )
+        opts.each do |opt, arg|
+          case
+            when opt == '--help' then @command = 'help'
+            when opt == '--overwrite' then @do_overwrite = true
+            when opt == '--mm-filename' then mm = arg
+            when opt == '--features-path' then fp = arg
+            when opt == '--source-mm' then @source_mindmap_filename = arg
+          end
         end
+      rescue => ex
+        @errors << ex.message
       end
 
+      # If features path or mindmap file name was not specified
+      # in option arguments then infer them from any remaining
+      # command line arguments. Specific option takes precidence.
       ARGV.each do |a|
         if a == 'map'
           @command = 'map' if @command == ''
+        elsif a.slice(-9, 9) == '/features'
+          fp = a if fp.empty?
+        elsif a.slice(-3, 3) == '.mm'
+          mm = a if mm.empty?
         else
-          # If features path or mindmap file name was not specified
-          # in option arguments then infer them from any remaining
-          # command line arguments. Specific option takes precidence.
-          fp = a if fp.empty? and a.slice(-9, 9) == '/features'
-          mm = a if mm.empty? and a.slice(-3, 3) == '.mm'
+          @errors << "Unknown command or option: #{a}"
         end
       end
 
@@ -143,12 +150,16 @@ xxx
 
     def run
       get_options
-      if @command == 'map'
-        read_features
-        write_mindmap
-        show_errors
+      if @errors.empty?
+        if @command == 'map'
+          read_features
+          write_mindmap
+          show_errors
+        else
+          show_help
+        end
       else
-        show_help
+        show_errors
       end
     end
 
