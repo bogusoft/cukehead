@@ -63,7 +63,6 @@ module Cukehead
   end
 
 
-
   class FeatureNode
 
     def initialize(node)
@@ -112,22 +111,20 @@ module Cukehead
       if node.has_elements?
         node.elements.each do |e|
         text = e.attributes["TEXT"]
-         if !text.nil?
-          case text
-            when /^Background:*/i
-              background = new_background text
-              background.from_mm_node(e)
-            when /^Scenario:*/i
-              scenario = new_scenario text
-              scenario.from_mm_node(e)
-            when /^\[file:.*/i
-              @feature_filename = filename_from text
-            when /^Tags:*/i
-              @tags.from_text text
-          else
-            @description << text
+          if !text.nil?
+            case text
+              when /^Background:*/i
+                @backgrounds << FeatureNodeChild.new(e)
+              when /^Scenario:*/i
+                @scenarios << FeatureNodeChild.new(e)
+              when /^\[file:.*/i
+                @feature_filename = filename_from text
+              when /^Tags:*/i
+                @tags.from_text text
+            else
+              @description << text
+            end
           end
-         end
         end
       end
     end

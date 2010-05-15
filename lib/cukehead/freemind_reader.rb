@@ -1,4 +1,5 @@
 require 'rexml/document'
+require 'cukehead/feature_node'
 
 module Cukehead
 
@@ -6,13 +7,35 @@ module Cukehead
     
     def initialize(filename)
       @mmdoc = nil
-      @features_node = nil
       File.open(filename, "r") {|f|
         xml = f.read
         @mmdoc = REXML::Document.new(xml)
-        @features_node = cucumber_features_node
       }
-      @features = []
+    end
+
+    def cucumber_features_node
+      REXML::XPath.first(@mmdoc, '//node[attribute::TEXT="Cucumber features:"]')
+    end
+    
+    def get_feature_nodes
+      node = cucumber_features_node
+      feature_nodes = []
+      node.each {|e|
+        if e.is_a? REXML::Element
+          text = e.attributes["TEXT"]
+          feature_nodes << FeatureNode.new(e) if text =~ /^feature:.*/i
+        end
+      }
+      feature_nodes
+    end
+
+    def get_features
+      result = Hash.new
+      feature_nodes = get_feature_nodes
+      feature_nodes.each {|feature|
+        result[feature.filename] = feature.to_text
+      }
+      result
     end
 
   end
