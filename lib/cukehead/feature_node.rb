@@ -132,6 +132,16 @@ module Cukehead
       end
     end
 
+    def to_text
+      text = @tags.to_text('') + @title + "\n"
+      pad = "  "
+      @description.each {|line| text += pad + line + "\n"}
+      text += "\n"
+      @backgrounds.each {|background| text += background.to_text(pad) + "\n"}
+      @scenarios.each {|scenario| text += scenario.to_text(pad) + "\n"}
+      text
+    end
+
   end
 
 end

@@ -78,7 +78,10 @@ xxx
       @xml = <<xxx
 <map>
   <node TEXT='Cucumber features:'>
-    <node TEXT='Feature: Test feature'/>
+    <node TEXT='Feature: Test feature'>
+      <node TEXT='As a test'/>
+      <node TEXT='I want to pass'/>
+    </node>
   </node>
 </map>
 xxx
@@ -129,7 +132,9 @@ xxx
     end
 
 
-    it "returns itself in Cucumber feature file format as a single string of text"
+    it "returns itself in Cucumber feature file format as a single string of text" do
+      @feature_node.to_text.should match "Feature: Test feature\n  As a test\n  I want to pass\n\n"
+    end
 
   end
 
