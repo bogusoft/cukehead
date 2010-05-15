@@ -63,3 +63,11 @@ describe "cukehead" do
   end
 
 end
+
+
+describe "cukehead (with 'cuke' command)" do
+
+  it "should read a mind map and write features if 'cuke' command is given"
+
+
+end

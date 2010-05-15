@@ -107,3 +107,25 @@ describe "Cukehead application" do
   end
 
 end
+
+describe "Cukehead application (generating features from mind map)" do
+
+  it "reads a FreeMind mind map and creates a set of Cucumber feature files"
+
+  it "looks for a single file matching *.mm in a 'mm' subdirectory of the current directory by default"
+
+  it "accepts the name of the mind map file to read overriding the default"
+
+  it "creates features in a 'features' sub-directory of the current directory by default"
+
+  it "accepts a features path to specify where to write feature files"
+
+  it "accepts a mind map file name to override the default"
+
+  it "creates the output directory if it does not exist"
+
+  it "does not write any files if any one of the files to be writtin exists"
+
+  it "accepts an overwrite option that allows it to replace exiting files"
+
+end
