@@ -1,4 +1,10 @@
 ----------------------------------------------------------------------
+
+To run RSpec and see HTML output
+
+spec -fh spec/*_spec.rb > /tmp/specs.html && firefox /tmp/specs.html
+
+----------------------------------------------------------------------
 [2010-04-27]
 
 Created project tree using newgem and removed a few things it made 
