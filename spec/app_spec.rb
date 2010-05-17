@@ -79,7 +79,7 @@ describe "Cukehead application" do
   end
 
   it "accepts an optional file name of an existing mind map" do
-    @app.source_mindmap_filename = 'test.mm'
+    @app.mindmap_template_filename = 'test.mm'
   end
 
   it "adds feature nodes under an existing 'Cucumber features:' node" do
@@ -87,7 +87,7 @@ describe "Cukehead application" do
     target = File.join $testing_tmp, 'app_spec_insert_test.mm'
     @app.mindmap_filename = target
     source_mm = File.join(@testdata_dir, 'insert_test.mm')
-    @app.source_mindmap_filename = source_mm
+    @app.mindmap_template_filename = source_mm
     @app.read_features
     @app.do_overwrite = true
     @app.write_mindmap
@@ -122,7 +122,7 @@ describe "Cukehead application (generating features from mind map)" do
   it "reads a FreeMind mind map and creates a set of Cucumber feature files"
 
   it "looks for a single file matching *.mm in a 'mm' subdirectory of the current directory by default" do
-    @app.default_mm_search_path.should eql Dir.getwd + '/mm/*.mm'
+    @app.default_mm_search_path.should eql Dir.getwd + '/mm/*.mm'    
   end
 
 

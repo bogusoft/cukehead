@@ -67,7 +67,10 @@ end
 
 describe "cukehead (with 'cuke' command)" do
 
-  it "should read a mind map and write features if 'cuke' command is given"
+  it "should read a mind map and write features if 'cuke' command is given" do
+    result = run_cukehead 'cuke -o'
+    result.should match /^Reading.*Writing.*/m
+  end
 
 
 end

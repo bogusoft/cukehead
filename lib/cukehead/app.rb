@@ -8,7 +8,7 @@ module Cukehead
   class App
     attr_accessor :features_path
     attr_accessor :mindmap_filename
-    attr_accessor :source_mindmap_filename
+    attr_accessor :mindmap_template_filename
     attr_accessor :do_overwrite
     attr_reader :errors
 
@@ -16,19 +16,20 @@ module Cukehead
       @command = ''
       @features_path = File.join(Dir.getwd, 'features')
       @mindmap_filename = File.join(Dir.getwd, 'mm', 'cukehead-output.mm')
-      @source_mindmap_filename = ''
-      @reader = nil
+      @mindmap_template_filename = ''
+      @feature_reader = nil
+      @mindmap_reader = nil
       @do_overwrite = false
       @errors = []
     end
 
 
     def get_source_xml
-      if @source_mindmap_filename.empty?
+      if @mindmap_template_filename.empty?
         nil
       else
         text = nil
-        File.open(@source_mindmap_filename, 'r') {|f|
+        File.open(@mindmap_template_filename, 'r') {|f|
           text = f.readlines
         }
         text.join
@@ -37,20 +38,20 @@ module Cukehead
 
 
     def read_features
-      @reader = FeatureReader.new get_source_xml
+      @feature_reader = FeatureReader.new get_source_xml
       search_path = File.join @features_path, '*.feature'
       puts "Reading " + search_path
       Dir[search_path].each {|filename|
         File.open(filename, 'r') {|f|
           text = f.readlines
-          @reader.extract_features filename, text #unless text.nil?
+          @feature_reader.extract_features filename, text #unless text.nil?
         }
       }
     end
 
 
     def write_mindmap
-      if @reader.nil?
+      if @feature_reader.nil?
         @errors << "No features to write (perhaps read_features has not been called)"
         return false
       end
@@ -62,13 +63,30 @@ module Cukehead
       FileUtils.mkdir_p(dir) unless File.directory? dir
       writer = FreemindWriter.new
       puts "Writing " + @mindmap_filename
-      writer.write_mm @mindmap_filename, @reader.freemind_xml
+      writer.write_mm @mindmap_filename, @feature_reader.freemind_xml
       return true
     end
 
 
     def default_mm_search_path
       File.join(Dir.getwd, 'mm', '*.mm')
+    end
+
+
+    def default_mm_file
+      Dir[default_mm_search_path].first
+    end
+
+
+    def read_mindmap
+      raise "Not implemented"
+
+    end
+
+
+    def write_features
+      #@mindmap_reader
+      raise "Not implemented"
     end
 
 
@@ -89,7 +107,7 @@ module Cukehead
             when opt == '--overwrite' then @do_overwrite = true
             when opt == '--mm-filename' then mm = arg
             when opt == '--features-path' then fp = arg
-            when opt == '--source-mm' then @source_mindmap_filename = arg
+            when opt == '--source-mm' then @mindmap_template_filename = arg
           end
         end
       rescue => ex
@@ -102,6 +120,8 @@ module Cukehead
       ARGV.each do |a|
         if a == 'map'
           @command = 'map' if @command == ''
+        elsif a == 'cuke'
+          @command = 'cuke' if @command == ''
         elsif a.slice(-9, 9) == '/features'
           fp = a if fp.empty?
         elsif a.slice(-3, 3) == '.mm'
@@ -159,6 +179,10 @@ xxx
         if @command == 'map'
           read_features
           write_mindmap
+          show_errors
+        elsif @command == 'cuke'
+          read_mindmap
+          write_features
           show_errors
         else
           show_help
