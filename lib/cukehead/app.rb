@@ -67,6 +67,11 @@ module Cukehead
     end
 
 
+    def default_mm_search_path
+      File.join(Dir.getwd, 'mm', '*.mm')
+    end
+
+
     def get_options
       mm = ''
       fp = ''

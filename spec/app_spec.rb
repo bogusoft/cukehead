@@ -24,23 +24,23 @@ describe "Cukehead application" do
   end
 
   it "looks for feature files in a 'features' sub-directory of the current directory by default" do
-    @app.features_path.should match Dir.getwd + '/features'
+    @app.features_path.should eql Dir.getwd + '/features'
   end
 
   it "accepts a features path to specify where to look for feature files" do
     dir = File.join $testing_tmp, 'features'
     @app.features_path = dir
-    @app.features_path.should match dir
+    @app.features_path.should eql dir
   end
 
   it "creates 'cukehead-output.mm' in a 'mm' sub-directory of the current directory by default" do
-    @app.mindmap_filename.should match Dir.getwd + '/mm/cukehead-output.mm'
+    @app.mindmap_filename.should eql Dir.getwd + '/mm/cukehead-output.mm'
   end
 
   it "accepts a mind map file name to override the default" do
     fn = File.join $testing_tmp, 'app_spec_test.mm'
     @app.mindmap_filename = fn
-    @app.mindmap_filename.should match fn
+    @app.mindmap_filename.should eql fn
   end
 
   it "creates the output directory if it does not exist" do
@@ -59,7 +59,7 @@ describe "Cukehead application" do
     @app.write_mindmap
     File.open(target, 'r') {|f|
       s = f.readline
-      s.should match "###"
+      s.should eql "###"
     }
   end
 
@@ -74,7 +74,7 @@ describe "Cukehead application" do
     @app.write_mindmap
     File.open(target, 'r') {|f|
       s = f.readline
-      s.should_not match "###"
+      s.should_not eql "###"
     }
   end
 
@@ -110,9 +110,21 @@ end
 
 describe "Cukehead application (generating features from mind map)" do
 
+  before do
+    #@testdata_dir = File.dirname(__FILE__) + '/../testdata'
+    #@features_dir = @testdata_dir + '/project1/features'
+    #File.directory?(@features_dir).should be_true
+    #File.directory?($testing_tmp).should be_true
+    @app = Cukehead::App.new
+  end
+
+
   it "reads a FreeMind mind map and creates a set of Cucumber feature files"
 
-  it "looks for a single file matching *.mm in a 'mm' subdirectory of the current directory by default"
+  it "looks for a single file matching *.mm in a 'mm' subdirectory of the current directory by default" do
+    @app.default_mm_search_path.should eql Dir.getwd + '/mm/*.mm'
+  end
+
 
   it "accepts the name of the mind map file to read overriding the default"
 
