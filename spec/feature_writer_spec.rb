@@ -17,13 +17,13 @@ module Cukehead
 
 
     it "writes to a subdirectory named 'features' in the current directory by default" do
-      @writer.output_path.should match File.join(Dir.getwd, 'features')
+      @writer.output_path.should eql File.join(Dir.getwd, 'features')
     end
 
 
     it "has an output directory attribute that can be set" do
       @writer.output_path = @outdir
-      @writer.output_path.should match @outdir
+      @writer.output_path.should eql @outdir
     end
 
 
@@ -43,7 +43,7 @@ module Cukehead
       @writer.errors.should have(1).items
       File.open(fn, 'r') {|f|
         s = f.readline
-        s.should match "###"
+        s.should eql "###"
       }
     end
 
@@ -64,7 +64,7 @@ module Cukehead
       @writer.errors.should have(0).items
       File.open(fn, 'r') {|f|
         s = f.readline
-        s.should match "Feature: Test 1"
+        s.should eql "Feature: Test 1"
       }
     end
 

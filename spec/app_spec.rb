@@ -126,11 +126,25 @@ describe "Cukehead application (generating features from mind map)" do
   end
 
 
-  it "accepts the name of the mind map file to read overriding the default"
+  it "accepts the name of the mind map file to read overriding the default" do
+    # Uses mindmap_filename attribute as source for optional mind map template
+    # file in 'map' mode and as destination in 'cuke' mode.
+    fn = File.join $testing_tmp, 'app_spec_test.mm'
+    @app.mindmap_filename = fn
+    @app.mindmap_filename.should eql fn
+  end
 
-  it "creates features in a 'features' sub-directory of the current directory by default"
+  it "creates features in a 'features' sub-directory of the current directory by default" do
+    @app.features_path.should eql Dir.getwd + '/features'
+  end
 
-  it "accepts a features path to specify where to write feature files"
+  it "accepts a features path to specify where to write feature files" do
+    # Uses features_path attribute as source directory in 'map' mode and as
+    # destination in 'cuke' mode.
+    dir = File.join $testing_tmp, 'output', 'features'
+    @app.features_path = dir
+    @app.features_path.should eql dir
+  end
 
   it "accepts a mind map file name to override the default"
 

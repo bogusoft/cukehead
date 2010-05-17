@@ -32,7 +32,7 @@ module Cukehead
     it "should save the path to the features directory" do
       filename = '/tmp/features/some.feature'
       @builder.add_features_path filename
-      @builder.features_path_text.should match "[path: /tmp/features]"
+      @builder.features_path_text.should eql "[path: /tmp/features]"
     end
 
     it "should create new XML node element with text, color, and folded attributes" do
@@ -41,7 +41,7 @@ module Cukehead
       folded = true
       node = @builder.new_node_element(text, color, folded)
       node.should be_a REXML::Element
-      node.to_s.should match "<node FOLDED='true' TEXT='Test node' COLOR='blue'/>"
+      node.to_s.should eql "<node FOLDED='true' TEXT='Test node' COLOR='blue'/>"
     end
 
     it "should add a feature and specify the name of the file it is from" do

@@ -48,7 +48,7 @@ describe "cukehead" do
 
     File.open(output_filename, 'r') {|f|
       s = f.readline
-      s.should match "###"
+      s.should eql "###"
     }
   end
   

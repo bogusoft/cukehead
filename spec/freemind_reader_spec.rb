@@ -25,7 +25,7 @@ module Cukehead
       result.should be_a Hash
       result.should have(1).feature
       filename, text = result.shift
-      filename.should match 'manage_website.feature'
+      filename.should eql 'manage_website.feature'
       text.should match /^Feature: Manage websites.*/m
     end
     
