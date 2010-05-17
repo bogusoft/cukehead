@@ -7,7 +7,7 @@ $testing_tmp = File.expand_path(File.join(File.dirname(__FILE__), '..', 'tmp'))
 $cukehead_bin = File.expand_path(File.join(File.dirname(__FILE__), '..', 'bin', 'cukehead'))
 
 
-
+# Fake FreeMind data with one feature with background and two scenarios.
 $testing_freemind_data = <<xxx
 <map>
   <node TEXT='Cucumber features:'>
@@ -35,6 +35,30 @@ $testing_freemind_data = <<xxx
 </map>
 xxx
 
+# Fake FreeMind data with two features.
+$testing_freemind_data_2 = <<xxx
+<map>
+  <node TEXT='Cucumber features:'>
+    <node TEXT='Feature: First feature'>
+      <node TEXT='In order to test cukehead'></node>
+      <node TEXT='I want some fake data'></node>
+      <node TEXT='Scenario: A scenario'>
+        <node TEXT='When I ask for a scenario'></node>
+        <node TEXT='Then I should get this one'></node>
+      </node>
+    </node>
+    <node TEXT='Feature: Second feature'>
+      <node TEXT='In order to further test cukehead'></node>
+      <node TEXT='I want to some more fake data'></node>
+      <node TEXT='Scenario: Fishing'>
+        <node TEXT='When we go fishing'></node>
+        <node TEXT='Then you should bring a line'></node>
+        <node TEXT='And I should bring a pole'></node>
+      </node>
+    </node>
+  </node>
+</map>
+xxx
 
 
 class FakeFreemindBuilder

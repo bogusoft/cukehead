@@ -2,6 +2,8 @@ require 'getoptlong'
 require 'fileutils'
 require 'cukehead/feature_reader'
 require 'cukehead/freemind_writer'
+require 'cukehead/freemind_reader'
+require 'cukehead/feature_writer'
 
 module Cukehead
 
@@ -40,7 +42,7 @@ module Cukehead
     def read_features
       @feature_reader = FeatureReader.new get_source_xml
       search_path = File.join @features_path, '*.feature'
-      puts "Reading " + search_path
+      puts "Reading #{search_path}"
       Dir[search_path].each {|filename|
         File.open(filename, 'r') {|f|
           text = f.readlines
@@ -56,7 +58,7 @@ module Cukehead
         return false
       end
       if @do_overwrite != true and File.exists? @mindmap_filename
-        @errors << "File already exists: " + @mindmap_filename
+        @errors << "File already exists: #{@mindmap_filename}"
         return false
       end
       dir = File.dirname(@mindmap_filename)
@@ -79,14 +81,18 @@ module Cukehead
 
 
     def read_mindmap
-      raise "Not implemented"
-
+      puts "Reading #{@mindmap_filename}"
+      @mindmap_reader = FreemindReader.new @mindmap_filename
     end
 
 
     def write_features
-      #@mindmap_reader
-      raise "Not implemented"
+      writer = FeatureWriter.new
+      writer.output_path = @features_path
+      features = @mindmap_reader.get_features
+      features.each_key {|filename| puts "Writing #{filename}"}
+      writer.write_features features
+      @errors << writer.errors unless writer.errors.empty?
     end
 
 
