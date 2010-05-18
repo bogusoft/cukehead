@@ -86,14 +86,34 @@ module Cukehead
     end
 
 
+#    def write_features
+#      writer = FeatureWriter.new
+#      writer.output_path = @features_path
+#      features = @mindmap_reader.get_features
+#      ok = true
+#      features.each_key {|filename|
+#        @errors << "#{filename} already exists."
+#        ok = false
+#      }
+#      if ok
+#      features.each_key {|filename| puts "Writing #{filename}"}
+#      writer.write_features features
+#      @errors << writer.errors unless writer.errors.empty?
+#
+#      end
+#    end
+
+
     def write_features
       writer = FeatureWriter.new
       writer.output_path = @features_path
+      writer.overwrite = @do_overwrite
       features = @mindmap_reader.get_features
       features.each_key {|filename| puts "Writing #{filename}"}
       writer.write_features features
       @errors << writer.errors unless writer.errors.empty?
     end
+
 
 
     def get_options

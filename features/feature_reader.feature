@@ -1,10 +1,10 @@
 Feature: feature reader
-In order to see the overall structure of a set of Cucumber features
-As a silly person
-I want to read feature files and create a FreeMind mind map.
+  In order to see the overall structure of a set of Cucumber features
+  As a silly person
+  I want to read feature files and create a FreeMind mind map.
 
-Background:
-  Given a feature file with:
+  Background:
+    Given a feature file with:
     """
     @atag
     Feature: Do something
@@ -19,9 +19,11 @@ Background:
       When presented with an opportunity
       And it is not stinky
       Then I should do it
-    """
 
-Scenario: Parse a feature file into a set of feature objects.
-  When the FeatureReader parses the text from the file
-  Then there should be a feature section titled "Do something'
+
+"""
+
+  Scenario: Parse a feature file into a set of feature objects.
+    When the FeatureReader parses the text from the file
+    Then there should be a feature section titled "Do something'
 

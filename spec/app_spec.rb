@@ -137,9 +137,6 @@ describe "Cukehead application (generating features from mind map)" do
   end
 
 
-  it "reads a FreeMind mind map and creates a set of Cucumber feature files"
-
-
   it "looks for a single file matching *.mm in a 'mm' subdirectory of the current directory by default" do
     @app.default_mm_search_path.should eql Dir.getwd + '/mm/*.mm'    
   end
@@ -178,24 +175,49 @@ describe "Cukehead application (generating features from mind map)" do
   end
 
 
-  it "writes a file for each feature in the mind map"
-
-
-  it "does not write any files if any one of the files to be writtin exists" do
-    outdir = File.join $testing_tmp, 'app_cuke_no_overwrite'
-    FileUtils.remove_dir(outdir) if File.directory? outdir
-    File.directory?(outdir).should be_false
-
-    mmfilename = File.join $testing_tmp, 'app_cuke_no_overwrite_test.mm'
-    File.open(mmfilename, 'w') {|f| f.write($testing_freemind_data)}
-    File.exists?(mmfilename).should be_true
-
-
-    false.should be_true  #*!* not finsihed. Need test MM with multiple features.
-
+  it "writes a file for each feature in the mind map" do
+    @app.mindmap_filename = @in_filename_2
+    @app.features_path = @out_dir
+    @app.read_mindmap
+    @app.write_features
+    a = []
+    Dir[File.join(@out_dir, '*')].each {|fn| a << File.basename(fn)}
+    a.should have(2).files
+    a.should include('first_feature.feature', 'second_feature.feature')
   end
 
 
-  it "accepts an overwrite option that allows it to replace exiting files"
+  it "does not write any files if any one of the files to be written already exists" do
+    FileUtils.mkdir(@out_dir)
+    fn = File.join @out_dir, 'second_feature.feature'
+    File.open(fn, 'w') {|f| f.write('###')}
+    File.exists?(fn).should be_true
+    @app.mindmap_filename = @in_filename_2
+    @app.features_path = @out_dir
+    @app.read_mindmap
+    @app.write_features
+    @app.errors.should have(1).error
+    @app.errors.first.to_s.should match /exists/i
+    a = Dir[File.join(@out_dir, '*')]
+    a.should have(1).file
+    File.open(fn, 'r') {|t| t.readline.should eql '###' }
+  end
+
+
+  it "accepts an overwrite option that allows it to replace exiting files" do
+    FileUtils.mkdir(@out_dir)
+    fn = File.join @out_dir, 'second_feature.feature'
+    File.open(fn, 'w') {|f| f.write('###')}
+    File.exists?(fn).should be_true
+    @app.mindmap_filename = @in_filename_2
+    @app.features_path = @out_dir
+    @app.do_overwrite = true
+    @app.read_mindmap
+    @app.write_features
+    @app.errors.should have(0).errors
+    a = Dir[File.join(@out_dir, '*')]
+    a.should have(2).files
+    File.open(fn, 'r') {|t| t.readline.should_not eql '###' }
+  end
 
 end
