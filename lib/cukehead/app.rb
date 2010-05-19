@@ -13,6 +13,7 @@ module Cukehead
     attr_accessor :mindmap_template_filename
     attr_accessor :do_overwrite
     attr_reader :errors
+    attr_reader :feature_reader
 
     def initialize
       @command = ''
@@ -43,7 +44,7 @@ module Cukehead
       @feature_reader = FeatureReader.new get_source_xml
       search_path = File.join @features_path, '*.feature'
       puts "Reading #{search_path}"
-      Dir[search_path].each {|filename|
+      Dir[search_path].sort.each {|filename|
         File.open(filename, 'r') {|f|
           text = f.readlines
           @feature_reader.extract_features filename, text #unless text.nil?

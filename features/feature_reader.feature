@@ -21,6 +21,15 @@ Feature: feature reader
       Then I should do it
 
 
+
+
+
+
+
+
+
+
+
 """
 
   Scenario: Parse a feature file into a set of feature objects.

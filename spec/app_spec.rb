@@ -112,6 +112,22 @@ describe "Cukehead application" do
     grandchild.to_s.should match /.*Test feature.*/
   end
 
+  it "reads files in the features directory in order by name" do
+    fdir = File.join $testing_tmp, 'features'
+    FileUtils.remove_dir(fdir) if File.directory? fdir
+    File.directory?(fdir).should be_false
+    FileUtils.mkdir(fdir)
+    # This may not be a good test because it is possible Dir[] will return the
+    # files in sorted order even though they are written out of order here.
+    File.open(File.join(fdir, 'carrots.feature'), 'w') {|f|f.write("Feature: Carrots\n")}
+    File.open(File.join(fdir, 'apples.feature'), 'w') {|f|f.write("Feature: Apples\n")}
+    File.open(File.join(fdir, 'bananas.feature'), 'w') {|f|f.write("Feature: Bananas\n")}
+    @app.features_path = fdir
+    @app.read_features
+    xml = @app.feature_reader.freemind_xml
+    xml.should match /.*Apples.*Bananas.*Carrots.*/m
+  end
+
 end
 
 describe "Cukehead application (generating features from mind map)" do
