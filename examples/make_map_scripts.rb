@@ -23,9 +23,10 @@ class CukeheadMapScripter
 
   def usage
     puts <<xxx
+    
 Usage: make_map_scripts projects_root
 Where:
-  projects_root = The path the top-level directory under which projects that
+  projects_root = Path to the top-level directory under which projects that
                   includes Cucumber features you wish to map are located.
 
 xxx
