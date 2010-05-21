@@ -42,7 +42,7 @@ describe "cukehead" do
     File.open(output_filename, 'w') {|f| f.write("###")}
     File.exists?(output_filename).should be_true
 
-    params = 'map -p ' + @features_dir + ' -m ' + output_filename
+    params = 'map -f ' + @features_dir + ' -m ' + output_filename
     result = run_cukehead params
     result.should match /.*already exists.*/
 

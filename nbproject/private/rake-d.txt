@@ -1,3 +1,10 @@
+clobber=
+clobber_rdoc=Remove rdoc products
 default=
+doc=
+doc/rdocs=
+doc/rdocs/index.html=
+rdoc=Build the rdoc HTML Files
+rerdoc=Force a rebuild of the RDOC files
 spec=Run specs
 unit_tests=Run tests for unit_tests

@@ -87,24 +87,6 @@ module Cukehead
     end
 
 
-#    def write_features
-#      writer = FeatureWriter.new
-#      writer.output_path = @features_path
-#      features = @mindmap_reader.get_features
-#      ok = true
-#      features.each_key {|filename|
-#        @errors << "#{filename} already exists."
-#        ok = false
-#      }
-#      if ok
-#      features.each_key {|filename| puts "Writing #{filename}"}
-#      writer.write_features features
-#      @errors << writer.errors unless writer.errors.empty?
-#
-#      end
-#    end
-
-
     def write_features
       writer = FeatureWriter.new
       writer.output_path = @features_path
@@ -116,7 +98,6 @@ module Cukehead
     end
 
 
-
     def get_options
       mm = ''
       fp = ''
@@ -125,7 +106,7 @@ module Cukehead
           ['--help', '-h', GetoptLong::NO_ARGUMENT],
           ['--overwrite', '-o', GetoptLong::NO_ARGUMENT],
           ['--mm-filename', '-m', GetoptLong::REQUIRED_ARGUMENT],
-          ['--features-path', '-p', GetoptLong::REQUIRED_ARGUMENT],
+          ['--features-path', '-f', GetoptLong::REQUIRED_ARGUMENT],
           ['--source-mm', '-s', GetoptLong::REQUIRED_ARGUMENT]
         )
         opts.each do |opt, arg|
@@ -187,7 +168,7 @@ options:
   -m FILENAME or --mm-filename FILENAME
       Specify name of output file (default is mm/cukehead-output.mm).
 
-  -p PATH or --features-path PATH
+  -f PATH or --features-path PATH
       Specify directory containing feature files to read
       (default is directory named 'features' in current directory).
 

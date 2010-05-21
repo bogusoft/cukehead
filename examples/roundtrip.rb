@@ -29,11 +29,11 @@ xxx
     cukehead = File.join @bin, 'cukehead'
     
     # Create a mind map from the project features.
-    cmd = "#{cukehead} map -o -p #{features_dir} -m #{mm_filename}"
+    cmd = "#{cukehead} map -o -f #{features_dir} -m #{mm_filename}"
     system(cmd)
 
     # Create a set of features from the resulting mind map.
-    cmd = "#{cukehead} cuke -o -p #{features_output_dir} -m #{mm_filename}"
+    cmd = "#{cukehead} cuke -o -f #{features_output_dir} -m #{mm_filename}"
     system(cmd)
 
 #    # Use Beyone Compare to view the results.

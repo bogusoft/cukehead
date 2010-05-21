@@ -4,6 +4,7 @@
 #require 'date'
 require 'spec/rake/spectask'
 require 'rake/testtask'
+require 'rake/rdoctask'
 
 #spec = Gem::Specification.new do |s|
 #  s.name = "cukehead"
@@ -62,3 +63,17 @@ Rake::TestTask.new("unit_tests") {|t|
   t.verbose = true
   t.warning = true
 }
+
+
+desc "Run RDoc to generate documentation"
+Rake::RDocTask.new do |rd|
+  rd.rdoc_dir = 'doc/rdocs'
+  #rd.main = 'README.txt'
+  rd.rdoc_files.include "lib/**/*\.rb"
+  #rd.options << '--inline-source'
+  #rd.options << '--line-numbers'
+  rd.options << '--all'
+  #rd.options << '--fileboxes'
+  #rd.options << '--diagram'
+end
+
