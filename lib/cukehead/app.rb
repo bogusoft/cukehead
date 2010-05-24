@@ -7,6 +7,10 @@ require 'cukehead/feature_writer'
 
 module Cukehead
 
+  # The Cukehead::App class is responsible for responding to
+  # command line arguments and providing the main functionality
+  # of the cukehead application.
+  #
   class App
     attr_accessor :features_path
     attr_accessor :mindmap_filename
@@ -26,6 +30,29 @@ module Cukehead
       @errors = []
     end
 
+
+    # The 'run' method is the main entry point for executing the
+    # cukehead application. It is responsible for responding to
+    # the command line arguments.
+    #
+    def run
+      get_options
+      if @errors.empty?
+        if @command == 'map'
+          read_features
+          write_mindmap
+          show_errors
+        elsif @command == 'cuke'
+          read_mindmap
+          write_features
+          show_errors
+        else
+          show_help
+        end
+      else
+        show_errors
+      end
+    end
 
     def get_source_xml
       if @mindmap_template_filename.empty?
@@ -180,25 +207,6 @@ options:
 xxx
     end
 
-
-    def run
-      get_options
-      if @errors.empty?
-        if @command == 'map'
-          read_features
-          write_mindmap
-          show_errors
-        elsif @command == 'cuke'
-          read_mindmap
-          write_features
-          show_errors
-        else
-          show_help
-        end
-      else
-        show_errors
-      end
-    end
 
   end
   
