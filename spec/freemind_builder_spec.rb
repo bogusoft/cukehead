@@ -10,7 +10,7 @@ module Cukehead
     end
 
     it "should specify a XML node for Cucumber features" do
-      node = @builder.cucumber_features_node
+      node = @builder.send :cucumber_features_node
       node.should be_a REXML::Element
       node.to_s.should match /.*Cucumber features:.*/
     end
@@ -18,7 +18,7 @@ module Cukehead
     it "should use an existing node labelled 'Cucumber features:' if there is one" do
       mm = "<map version='0.7.1'><node TEXT='mind map'><node TEXT='A child node'><node TEXT='Cucumber features:'></node></node></node></map>"
       b = FreemindBuilder.new mm
-      node = b.cucumber_features_node
+      node = b.send :cucumber_features_node
       node.should be_a REXML::Element
       xml = b.xml
       doc = REXML::Document.new(xml)
@@ -31,15 +31,16 @@ module Cukehead
 
     it "should save the path to the features directory" do
       filename = '/tmp/features/some.feature'
-      @builder.add_features_path filename
-      @builder.features_path_text.should eql "[path: /tmp/features]"
+      @builder.send :add_features_path, filename
+      result = @builder.send :features_path_text
+      result.should eql "[path: /tmp/features]"
     end
 
     it "should create new XML node element with text, color, and folded attributes" do
       text = "Test node"
       color = "blue"
       folded = true
-      node = @builder.new_node_element(text, color, folded)
+      node = @builder.send :new_node_element, text, color, folded
       node.should be_a REXML::Element
       node.to_s.should eql "<node FOLDED='true' TEXT='Test node' COLOR='blue'/>"
     end

@@ -31,9 +31,8 @@ module Cukehead
     end
 
 
-    # The 'run' method is the main entry point for executing the
-    # cukehead application. It is responsible for responding to
-    # the command line arguments.
+    # Main entry point for executing the cukehead application.
+    # Responsible for responding to the command line arguments.
     #
     def run
       get_options
@@ -54,18 +53,7 @@ module Cukehead
       end
     end
 
-    def get_source_xml
-      if @mindmap_template_filename.empty?
-        nil
-      else
-        text = nil
-        File.open(@mindmap_template_filename, 'r') {|f|
-          text = f.readlines
-        }
-        text.join
-      end
-    end
-
+  private
 
     def read_features
       @feature_reader = FeatureReader.new get_source_xml
@@ -103,11 +91,6 @@ module Cukehead
     end
 
 
-    def default_mm_file
-      Dir[default_mm_search_path].first
-    end
-
-
     def read_mindmap
       puts "Reading #{@mindmap_filename}"
       @mindmap_reader = FreemindReader.new @mindmap_filename
@@ -122,6 +105,24 @@ module Cukehead
       features.each_key {|filename| puts "Writing #{filename}"}
       writer.write_features features
       @errors << writer.errors unless writer.errors.empty?
+    end
+
+
+    def get_source_xml
+      if @mindmap_template_filename.empty?
+        nil
+      else
+        text = nil
+        File.open(@mindmap_template_filename, 'r') {|f|
+          text = f.readlines
+        }
+        text.join
+      end
+    end
+
+
+    def default_mm_file
+      Dir[default_mm_search_path].first
     end
 
 

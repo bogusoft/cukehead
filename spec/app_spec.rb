@@ -11,21 +11,24 @@ describe "Cukehead application" do
     @app = Cukehead::App.new
   end
 
+
   it "reads a set of Cucumber features and create a FreeMind mind map" do
     @app.features_path = @features_dir
     target = File.join $testing_tmp, 'app_spec_test.mm'
     File.delete target if File.exists? target
     File.exists?(target).should be_false
     @app.mindmap_filename = target
-    @app.read_features 
-    result = @app.write_mindmap
+    @app.send :read_features
+    result = @app.send :write_mindmap
     result.should be_true
     File.exists?(target).should be_true
   end
 
+
   it "looks for feature files in a 'features' sub-directory of the current directory by default" do
     @app.features_path.should eql Dir.getwd + '/features'
   end
+
 
   it "accepts a features path to specify where to look for feature files" do
     dir = File.join $testing_tmp, 'features'
@@ -33,15 +36,18 @@ describe "Cukehead application" do
     @app.features_path.should eql dir
   end
 
+
   it "creates 'cukehead-output.mm' in a 'mm' sub-directory of the current directory by default" do
     @app.mindmap_filename.should eql Dir.getwd + '/mm/cukehead-output.mm'
   end
+
 
   it "accepts a mind map file name to override the default" do
     fn = File.join $testing_tmp, 'app_spec_test.mm'
     @app.mindmap_filename = fn
     @app.mindmap_filename.should eql fn
   end
+
 
   it "creates the output directory if it does not exist" do
     outdir = File.join $testing_tmp, 'app_test_dir_create'
@@ -50,10 +56,11 @@ describe "Cukehead application" do
     fn = File.join outdir, 'test.mm'
     @app.features_path = @features_dir
     @app.mindmap_filename = fn
-    @app.read_features
-    @app.write_mindmap
+    @app.send :read_features
+    @app.send :write_mindmap
     File.directory?(outdir).should be_true
   end
+
 
   it "does not overwrite an existing mind map file" do
     @app.features_path = @features_dir
@@ -61,13 +68,16 @@ describe "Cukehead application" do
     @app.mindmap_filename = target
     File.open(target, 'w') {|f| f.write("###")}
     File.exists?(target).should be_true
-    @app.read_features
-    @app.write_mindmap
+
+    @app.send :read_features
+    @app.send :write_mindmap
+
     File.open(target, 'r') {|f|
       s = f.readline
       s.should eql "###"
     }
   end
+
 
   it "accepts an overwrite option that allows it to replace an exiting mind map file" do
     @app.features_path = @features_dir
@@ -75,18 +85,22 @@ describe "Cukehead application" do
     @app.mindmap_filename = target
     File.open(target, 'w') {|f| f.write("###")}
     File.exists?(target).should be_true
-    @app.read_features
+
+    @app.send :read_features
+
     @app.do_overwrite = true
-    @app.write_mindmap
+    @app.send :write_mindmap
     File.open(target, 'r') {|f|
       s = f.readline
       s.should_not eql "###"
     }
   end
 
+
   it "accepts an optional file name of an existing mind map" do
     @app.mindmap_template_filename = 'test.mm'
   end
+
 
   it "adds feature nodes under an existing 'Cucumber features:' node" do
     @app.features_path = @features_dir
@@ -94,9 +108,11 @@ describe "Cukehead application" do
     @app.mindmap_filename = target
     source_mm = File.join(@testdata_dir, 'insert_test.mm')
     @app.mindmap_template_filename = source_mm
-    @app.read_features
+
+    @app.send :read_features
+    
     @app.do_overwrite = true
-    @app.write_mindmap
+    @app.send :write_mindmap
     mm = ''
     File.open(target, 'r') {|f|
       mm = f.readlines
@@ -112,6 +128,7 @@ describe "Cukehead application" do
     grandchild.to_s.should match /.*Test feature.*/
   end
 
+
   it "reads files in the features directory in order by name" do
     fdir = File.join $testing_tmp, 'features'
     FileUtils.remove_dir(fdir) if File.directory? fdir
@@ -123,12 +140,13 @@ describe "Cukehead application" do
     File.open(File.join(fdir, 'apples.feature'), 'w') {|f|f.write("Feature: Apples\n")}
     File.open(File.join(fdir, 'bananas.feature'), 'w') {|f|f.write("Feature: Bananas\n")}
     @app.features_path = fdir
-    @app.read_features
+    @app.send :read_features
     xml = @app.feature_reader.freemind_xml
     xml.should match /.*Apples.*Bananas.*Carrots.*/m
   end
 
 end
+
 
 describe "Cukehead application (generating features from mind map)" do
 
@@ -154,7 +172,8 @@ describe "Cukehead application (generating features from mind map)" do
 
 
   it "looks for a single file matching *.mm in a 'mm' subdirectory of the current directory by default" do
-    @app.default_mm_search_path.should eql Dir.getwd + '/mm/*.mm'    
+    result = @app.send :default_mm_search_path
+    result.should eql Dir.getwd + '/mm/*.mm'
   end
 
 
@@ -184,8 +203,8 @@ describe "Cukehead application (generating features from mind map)" do
   it "creates the output directory if it does not exist" do
     @app.mindmap_filename = @in_filename_1
     @app.features_path = @out_dir
-    @app.read_mindmap
-    @app.write_features
+    @app.send :read_mindmap
+    @app.send :write_features
 
     File.directory?(@out_dir).should be_true
   end
@@ -194,8 +213,8 @@ describe "Cukehead application (generating features from mind map)" do
   it "writes a file for each feature in the mind map" do
     @app.mindmap_filename = @in_filename_2
     @app.features_path = @out_dir
-    @app.read_mindmap
-    @app.write_features
+    @app.send :read_mindmap
+    @app.send :write_features
     a = []
     Dir[File.join(@out_dir, '*')].each {|fn| a << File.basename(fn)}
     a.should have(2).files
@@ -210,8 +229,8 @@ describe "Cukehead application (generating features from mind map)" do
     File.exists?(fn).should be_true
     @app.mindmap_filename = @in_filename_2
     @app.features_path = @out_dir
-    @app.read_mindmap
-    @app.write_features
+    @app.send :read_mindmap
+    @app.send :write_features
     @app.errors.should have(1).error
     @app.errors.first.to_s.should match /exists/i
     a = Dir[File.join(@out_dir, '*')]
@@ -228,8 +247,8 @@ describe "Cukehead application (generating features from mind map)" do
     @app.mindmap_filename = @in_filename_2
     @app.features_path = @out_dir
     @app.do_overwrite = true
-    @app.read_mindmap
-    @app.write_features
+    @app.send :read_mindmap
+    @app.send :write_features
     @app.errors.should have(0).errors
     a = Dir[File.join(@out_dir, '*')]
     a.should have(2).files
