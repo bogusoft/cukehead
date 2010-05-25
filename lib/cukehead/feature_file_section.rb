@@ -2,8 +2,17 @@ require 'cukehead/feature_part'
 
 module Cukehead
 
+  # Base class for a container that holds a part of a Cucumber
+  # feature file that will be passed to a FreemindBuilder object
+  # once the part has been read.
+  #
   class FeatureFileSection
 
+    # Parameters:
+    # builder:: Instance of FreemindBuilder that will receive this
+    # section of the file.
+    # title:: String containing the title of the section.
+    #
     def initialize(builder, title)
       @builder = builder
       @part = FeaturePart.new title
@@ -24,6 +33,8 @@ module Cukehead
   end
 
 
+  # Serves as a container for the feature description part of a Cucumber 
+  # feature file while parsing the file.
   class FeatureSection < FeatureFileSection
 
     def initialize (builder, text, filename)
