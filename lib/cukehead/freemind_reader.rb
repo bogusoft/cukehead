@@ -13,10 +13,16 @@ module Cukehead
       }
     end
 
+    
+    # Returns the first <i>REXML::Element</i> containing a TEXT attribute 
+    # that matches 'Cucumber features:'.
+    # Returns nil if no match is found.
+    #
     def cucumber_features_node
       REXML::XPath.first(@mmdoc, '//node[attribute::TEXT="Cucumber features:"]')
     end
-    
+
+
     def get_feature_nodes
       node = cucumber_features_node
       feature_nodes = []

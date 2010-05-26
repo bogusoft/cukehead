@@ -1,30 +1,7 @@
 require 'rexml/document'
+require 'cukehead/feature_node_tags'
 
 module Cukehead
-
-  class FeatureNodeTags
-
-    def initialize
-      @tagstr = ''
-    end
-
-    def from_text(text)
-      a = text.split(':')
-      if a.length == 2
-        @tagstr = a[1].strip
-      end
-    end
-
-    def to_text(pad)
-      if @tagstr.length == 0
-        ''
-      else
-        pad + @tagstr + "\n"
-      end
-    end
-
-  end
-
 
   class FeatureNodeChild
 
