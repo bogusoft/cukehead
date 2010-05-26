@@ -1,44 +1,8 @@
 require 'rexml/document'
 require 'cukehead/feature_node_tags'
+require 'cukehead/feature_node_child'
 
 module Cukehead
-
-  class FeatureNodeChild
-
-    def initialize(node)
-      @description = []
-      @tags = FeatureNodeTags.new
-      @title = node.attributes["TEXT"]
-      from_mm_node node
-    end
-
-    def from_mm_node(node)
-      if node.has_elements?
-        node.elements.each do |e|
-          text = e.attributes["TEXT"]
-          unless text.nil?
-            if text =~ /^Tags:*/i
-              @tags.from_text text
-            else
-              @description << text
-            end
-          end
-        end
-      end
-    end
-
-    def to_text(pad)
-
-      #*!* DEBUG
-      #$stderr.puts("------------------------------------------------------------")
-      #@description.each {|d| $stderr.puts('[' + d.dump + "]\n")}
-
-      s = "\n"
-      @description.each {|d| s += pad + "  " + d + "\n"}
-      pad + @tags.to_text(pad) + @title + s
-    end
-  end
-
 
   class FeatureNode
 
