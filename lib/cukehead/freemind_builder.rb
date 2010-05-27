@@ -16,6 +16,9 @@ module Cukehead
     FOLD_SCENARIO = true
 
 
+    # ===Parameters
+    # <tt>mm_xml</tt> - String, optional.
+    #
     def initialize(mm_xml = nil)
       if mm_xml.nil?
         @mmdoc = REXML::Document.new(DEFAULT_XML)
@@ -28,6 +31,11 @@ module Cukehead
     end
 
 
+    # ===Parameters
+    # <tt>part</tt> - Cukehead::FeaturePart containing feature description.
+    #
+    # <tt>filename</tt> - String containing name of the source file for this feature.
+    #
     def add_feature(part, filename)
       add_features_path(filename) if @features_path.nil?
       new_node = new_feature_node part.title
@@ -50,6 +58,9 @@ module Cukehead
     end
 
 
+    # ===Parameters
+    # <tt>part</tt> - Cukehead::FeaturePart containing background description.
+    #
     def add_background(part)
       new_node = @current_feature.add_element(new_node_element(part.title.strip, COLOR_BACKGROUND, FOLD_BACKGROUND))
       unless part.tags.empty?
@@ -67,6 +78,9 @@ module Cukehead
     end
 
 
+    # ===Parameters
+    # <tt>part</tt> - Cukehead::FeaturePart containing scenario description.
+    #
     def add_scenario(part)
       @scenario_count += 1
       @scenario_count.odd? ? color = COLOR_SCENARIO_1 : color = COLOR_SCENARIO_2

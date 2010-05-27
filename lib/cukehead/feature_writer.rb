@@ -13,8 +13,11 @@ module Cukehead
     end
 
 
+    # Writes feature files to the location specified by :output_path.
+    # ===Parameters
+    # <tt>features</tt> - Hash of filename => featuretext.
+    #
     def write_features(features)
-      # Param features must be a hash of filename => featuretext.
       FileUtils.mkdir_p(@output_path) unless File.directory? @output_path
       ok = true
       unless @overwrite

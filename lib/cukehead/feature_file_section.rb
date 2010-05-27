@@ -8,23 +8,26 @@ module Cukehead
   #
   class FeatureFileSection
 
-    # Parameters:
-    # builder:: Instance of FreemindBuilder that will receive this
-    # section of the file.
-    # title:: String containing the title of the section.
+    # ===Parameters
+    # <tt>builder</tt> - Instance of FreemindBuilder that will receive this section of the file.
+    #
+    # <tt>title</tt> - String containing the title of the section.
     #
     def initialize(builder, title)
       @builder = builder
       @part = FeaturePart.new title
     end
 
+
     def add(line)
       @part.add_line(line)
     end
 
+
     def set_tags(tags)
       @part.tags = tags.clone
     end
+
 
     def finish
       raise "Not implemented"
@@ -35,6 +38,7 @@ module Cukehead
 
   # Serves as a container for the feature description part of a Cucumber 
   # feature file while parsing the file.
+  #
   class FeatureSection < FeatureFileSection
 
     def initialize (builder, text, filename)

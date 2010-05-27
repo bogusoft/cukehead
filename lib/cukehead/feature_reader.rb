@@ -5,11 +5,20 @@ module Cukehead
 
   class FeatureReader
 
+    # ===Parameters
+    # <tt>mm_xml</tt> - Optional string containing XML representation of a
+    # FreeMind mind map into which a Cucumber Features node will be inserted.
+    #
     def initialize(mm_xml = nil)
       @builder = FreemindBuilder.new(mm_xml)
     end
 
 
+    # ===Parameters
+    # <tt>filename</tt> - The name of the file from which text was read.
+    #
+    #<tt>text</tt> - String containing the text of a Cucumber feature file.
+    #
     def extract_features(filename, text)
       @section = nil
       in_literal_text = false
@@ -58,6 +67,8 @@ module Cukehead
     end
 
 
+    # Returns a string that is the FreeMind mind map XML.
+    #
     def freemind_xml
       @builder.xml
     end
