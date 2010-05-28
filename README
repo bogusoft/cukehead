@@ -1,0 +1,52 @@
+== cukehead
+
+=== Introduction
+
+Cukehead provides hours (well, maybe a couple minutes) of fun
+exploring Cucumber feature files in the form of FreeMind mind 
+maps. If you want to create feature files based on a mind map
+it can do that too but I'm not sure anyone will want to do 
+that.
+
+Cukehead is the result of the author wanting to learn how Cucumber works
+in preparation for a Rails project during the same period of time he was
+exploring mind mapping software in a questionable attempt to become more
+organized. Somehow the two came together as an excercise to learn how to
+build a Ruby application.
+
+
+=== Usage
+
+cukehead command [options]
+
+command:
+  map
+      Read Cucumber feature files and create a FreeMind mind map file.
+
+  cuke
+      Read a FreeMind mind map file and create Cucumber feature files.
+
+options:
+  -o or --overwrite
+      Overwrite existing output file(s).
+
+  -m FILENAME or --mm-filename FILENAME
+      map: Name of output file (default is mm/cukehead-output.mm).
+
+  -f PATH or --features-path PATH
+      map: Directory containing feature files to read (default is directory
+      named 'features' in current directory).
+
+      cuke: Directory feature files  will be written to.
+
+  -s FILENAME or --source-mm FILENAME
+      map: FreeMind mind map file to use as a template for creating
+      the output file. If the template contains a node with the text
+      'Cucumber features:' then the feature nodes will be inserted there.
+
+=== Resources
+
+Cucumber project: http://cukes.info/
+
+FreeMind project: http://freemind.sourceforge.net/wiki/index.php/Main_Page
+

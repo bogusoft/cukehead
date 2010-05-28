@@ -1,32 +1,34 @@
-#require 'rubygems' unless ENV['NO_RUBYGEMS']
-#require 'rake/gempackagetask'
-#require 'rubygems/specification'
-#require 'date'
+require 'rubygems' unless ENV['NO_RUBYGEMS']
+require 'rake/gempackagetask'
+require 'rubygems/specification'
+require 'date'
 require 'spec/rake/spectask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-#spec = Gem::Specification.new do |s|
-#  s.name = "cukehead"
-#  s.version = "0.0.1"
-#  s.author = "Bill Melvin"
-#  s.email = "bill@bogusoft.com"
-#  s.homepage = "http://www.bogusoft.com"
-#  s.description = s.summary = "A gem that creates a FreeMind mind map from Cucumber feature files and vice versa."
-#  
-#  s.platform = Gem::Platform::RUBY
-#  s.has_rdoc = true
-#  #s.extra_rdoc_files = ["README", "LICENSE", 'TODO']
-#  s.extra_rdoc_files = ["README"]
-#  s.summary = SUMMARY
-#  
-#  # Uncomment this to add a dependency
-#  # s.add_dependency "foo"
-#  
-#  s.require_path = 'lib'
-#  s.autorequire = GEM
-#  s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
-#end
+spec = Gem::Specification.new do |s|
+  s.name = "cukehead"
+  s.version = "0.0.1"
+  s.author = "Bill Melvin"
+  s.email = "bill@bogusoft.com"
+  s.homepage = "http://www.bogusoft.com"
+  s.description = s.summary = "A gem that creates a FreeMind mind map from Cucumber feature files and vice versa."
+  
+  s.platform = Gem::Platform::RUBY
+  s.has_rdoc = true
+  #s.extra_rdoc_files = ["README", "LICENSE", 'TODO']
+  s.extra_rdoc_files = ["README"]
+  #s.summary = SUMMARY
+  
+  # Uncomment this to add a dependency
+  # s.add_dependency "foo"
+  
+  s.require_path = 'lib'
+  #s.autorequire = GEM
+
+  #s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
+  s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,spec}/**/*")
+end
 
 #task :default => :spec
 
@@ -68,12 +70,10 @@ Rake::TestTask.new("unit_tests") {|t|
 desc "Run RDoc to generate documentation"
 Rake::RDocTask.new do |rd|
   rd.rdoc_dir = 'doc/rdocs'
-  #rd.main = 'README.txt'
-  rd.rdoc_files.include "lib/**/*\.rb"
-  #rd.options << '--inline-source'
-  #rd.options << '--line-numbers'
+  rd.main = 'README'
+  rd.rdoc_files.include 'README', "lib/**/*\.rb"
   rd.options << '--all'
-  #rd.options << '--fileboxes'
-  #rd.options << '--diagram'
+  rd.options << '--inline-source'
+  #rd.options << '--line-numbers'
 end
 
