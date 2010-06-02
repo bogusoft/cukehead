@@ -6,9 +6,11 @@ require 'spec/rake/spectask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
+GEM = 'cukehead'
+
 spec = Gem::Specification.new do |s|
   s.name = "cukehead"
-  s.version = "0.0.1"
+  s.version = "0.1.1"
   s.author = "Bill Melvin"
   s.email = "bill@bogusoft.com"
   s.homepage = "http://www.bogusoft.com"
@@ -27,7 +29,14 @@ spec = Gem::Specification.new do |s|
   #s.autorequire = GEM
 
   #s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
-  s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,spec}/**/*")
+
+  #a = []
+  #File.open('Manifest.txt', 'r') {|f| f.each {|line| a << line.strip}}
+  #s.files = a
+
+  s.files = []
+  File.open('Manifest.txt', 'r') {|f| f.each {|line| s.files << line.strip}}
+
 end
 
 #task :default => :spec
@@ -40,21 +49,21 @@ Spec::Rake::SpecTask.new do |t|
 end
 
 
-#Rake::GemPackageTask.new(spec) do |pkg|
-#  pkg.gem_spec = spec
-#end
+Rake::GemPackageTask.new(spec) do |pkg|
+  pkg.gem_spec = spec
+end
 
 #desc "install the gem locally"
 #task :install => [:package] do
 #  sh %{sudo gem install pkg/#{GEM}-#{GEM_VERSION}}
 #end
 
-#desc "create a gemspec file"
-#task :make_spec do
-#  File.open("#{GEM}.gemspec", "w") do |file|
-#    file.puts spec.to_ruby
-#  end
-#end
+desc "create a gemspec file"
+task :make_spec do
+  File.open("#{GEM}.gemspec", "w") do |file|
+    file.puts spec.to_ruby
+  end
+end
 
 
 task :default => [:unit_tests, :spec]

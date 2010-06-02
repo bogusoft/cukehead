@@ -2,3 +2,5 @@
 tmp/*
 doc/rdocs/*
 mm/cukehead-output.mm
+pkg/*
+cukehead.gemspec
