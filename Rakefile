@@ -30,13 +30,9 @@ spec = Gem::Specification.new do |s|
 
   #s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
 
-  #a = []
-  #File.open('Manifest.txt', 'r') {|f| f.each {|line| a << line.strip}}
-  #s.files = a
-
-  s.files = []
-  File.open('Manifest.txt', 'r') {|f| f.each {|line| s.files << line.strip}}
-
+  files = []
+  File.open('Manifest.txt', 'r') {|f| f.each {|line| files << line.strip}}
+  s.files = files
 end
 
 #task :default => :spec
