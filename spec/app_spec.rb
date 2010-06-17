@@ -8,15 +8,16 @@ describe "Cukehead application" do
     @features_dir = @testdata_dir + '/project1/features'
     File.directory?(@features_dir).should be_true
     File.directory?($testing_tmp).should be_true
+    @test_mm_filename = File.join $testing_tmp, 'app_spec_test.mm'
+    File.delete @test_mm_filename if File.exists? @test_mm_filename
+    File.exists?(@test_mm_filename).should be_false
     @app = Cukehead::App.new
   end
 
 
   it "reads a set of Cucumber features and create a FreeMind mind map" do
     @app.features_path = @features_dir
-    target = File.join $testing_tmp, 'app_spec_test.mm'
-    File.delete target if File.exists? target
-    File.exists?(target).should be_false
+    target = @test_mm_filename
     @app.mindmap_filename = target
     @app.send :read_features
     result = @app.send :write_mindmap
@@ -43,9 +44,8 @@ describe "Cukehead application" do
 
 
   it "accepts a mind map file name to override the default" do
-    fn = File.join $testing_tmp, 'app_spec_test.mm'
-    @app.mindmap_filename = fn
-    @app.mindmap_filename.should eql fn
+    @app.mindmap_filename = @test_mm_filename
+    @app.mindmap_filename.should eql @test_mm_filename
   end
 
 
@@ -64,7 +64,7 @@ describe "Cukehead application" do
 
   it "does not overwrite an existing mind map file" do
     @app.features_path = @features_dir
-    target = File.join $testing_tmp, 'app_spec_test.mm'
+    target = @test_mm_filename
     @app.mindmap_filename = target
     File.open(target, 'w') {|f| f.write("###")}
     File.exists?(target).should be_true
@@ -81,7 +81,7 @@ describe "Cukehead application" do
 
   it "accepts an overwrite option that allows it to replace an exiting mind map file" do
     @app.features_path = @features_dir
-    target = File.join $testing_tmp, 'app_spec_test.mm'
+    target = @test_mm_filename
     @app.mindmap_filename = target
     File.open(target, 'w') {|f| f.write("###")}
     File.exists?(target).should be_true
@@ -151,6 +151,11 @@ end
 describe "Cukehead application (generating features from mind map)" do
 
   before do
+    # Define temporary mind map file and make sure the file does not exist.
+    @test_mm_filename = File.join $testing_tmp, 'app_spec_test.mm'
+    File.delete @test_mm_filename if File.exists? @test_mm_filename
+    File.exists?(@test_mm_filename).should be_false
+
     # Define temporary input directory and create test mind map files.
     @in_dir =  File.join $testing_tmp, 'app_cuke_test_input'
     FileUtils.mkdir(@in_dir) unless File.directory? @in_dir
@@ -180,9 +185,8 @@ describe "Cukehead application (generating features from mind map)" do
   it "accepts the name of the mind map file to read overriding the default" do
     # Uses mindmap_filename attribute as source for optional mind map template
     # file in 'map' mode and as destination in 'cuke' mode.
-    fn = File.join $testing_tmp, 'app_spec_test.mm'
-    @app.mindmap_filename = fn
-    @app.mindmap_filename.should eql fn
+    @app.mindmap_filename = @test_mm_filename
+    @app.mindmap_filename.should eql @test_mm_filename
   end
 
 
@@ -253,6 +257,19 @@ describe "Cukehead application (generating features from mind map)" do
     a = Dir[File.join(@out_dir, '*')]
     a.should have(2).files
     File.open(fn, 'r') {|t| t.readline.should_not eql '###' }
+  end
+
+  it "returns an error message if no features were found in the mind map" do
+    File.open(@test_mm_filename, 'w') {|f| f.write($testing_freemind_data_nocukes)}
+    File.exists?(@test_mm_filename).should be_true
+    @app.mindmap_filename = @test_mm_filename
+    @app.features_path = @out_dir
+    @app.do_overwrite = true
+    @app.send :read_mindmap
+    @app.send :write_features
+    @app.errors.should have(2).errors
+    @app.errors[0].to_s.should match /No Cucumber features found/
+    @app.errors[1].to_s.should match /may be missing a "Cucumber features:" node/
   end
 
 end

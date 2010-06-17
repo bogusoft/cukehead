@@ -102,9 +102,14 @@ module Cukehead
       writer.output_path = @features_path
       writer.overwrite = @do_overwrite
       features = @mindmap_reader.get_features
-      features.each_key {|filename| puts "Writing #{filename}"}
-      writer.write_features features
-      @errors << writer.errors unless writer.errors.empty?
+      if features.empty?
+        @errors << 'No Cucumber features found in the mind map file.'
+        @errors << 'Mind map may be missing a "Cucumber features:" node.'
+      else
+        features.each_key {|filename| puts "Writing #{filename}"}
+        writer.write_features features
+        @errors << writer.errors unless writer.errors.empty?
+      end
     end
 
 
