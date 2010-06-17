@@ -31,7 +31,7 @@ module Cukehead
           text = e.attributes["TEXT"]
           feature_nodes << FeatureNode.new(e) if text =~ /^feature:.*/i
         end
-      }
+      } unless node.nil?
       feature_nodes
     end
 

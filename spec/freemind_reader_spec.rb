@@ -29,6 +29,16 @@ module Cukehead
       text.should match /^Feature: Manage websites.*/m
     end
     
+    it "returns an empty hash if there are no Cucumber features nodes in the XML document" do
+      test_filename = File.join $testing_tmp, 'freemind_reader_test_input.mm'
+      File.open(test_filename, 'w') {|f| f.write($testing_freemind_data_nocukes)}
+      File.exists?(test_filename).should be_true
+      @reader = FreemindReader.new(test_filename)
+      result = @reader.get_features
+      result.should be_a Hash
+      result.should have(0).items
+    end
+    
   end
 
 end

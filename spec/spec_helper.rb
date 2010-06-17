@@ -60,6 +60,15 @@ $testing_freemind_data_2 = <<xxx
 </map>
 xxx
 
+# Fake FreeMind data with no Cucumber features node.
+$testing_freemind_data_nocukes = <<xxx
+<map>
+  <node TEXT='Yes I have no cukes.'>
+    <node TEXT='I have no cukes today'/>
+  </node>
+</map>
+xxx
+
 
 class FakeFreemindBuilder
   def add_feature(part, filename)
