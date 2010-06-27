@@ -45,9 +45,15 @@ module Cukehead
     end
 
     it "ignores case when finding a cucumber features node in the mind map." do
-      File.open(@test_filename, 'w') {|f| f.write($testing_freemind_data_case2)}
-      File.exists?(@test_filename).should be_true
-      @reader = FreemindReader.new(@test_filename)
+      xml = <<xxx
+<map>
+  <node TEXT='Cucumber Features:'>
+    <node TEXT='Feature: Do nothing' />
+  </node>
+</map>
+xxx
+      @reader = FreemindReader.new
+      @reader.load_xml xml
       @reader.cucumber_features_node.should_not be_nil
     end
     

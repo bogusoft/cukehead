@@ -5,14 +5,22 @@ module Cukehead
 
   class FreemindReader
     
-    def initialize(filename)
+    def initialize(filename = nil)
       @mmdoc = nil
-      File.open(filename, "r") {|f|
-        xml = f.read
-        @mmdoc = REXML::Document.new(xml)
-      }
+      read_file filename unless filename.nil?
     end
 
+    # Loads the text from the specified file into a new REXML::Document
+    #
+    def read_file(filename)
+      File.open(filename, "r") {|f| load_xml(f.read)}
+    end
+
+    # Loads the given XML string into a new REXML::Document.
+    #
+    def load_xml(xml)
+      @mmdoc = REXML::Document.new(xml)
+    end
     
     # Returns the first <i>REXML::Element</i> containing a TEXT attribute 
     # that matches 'Cucumber features:'.
