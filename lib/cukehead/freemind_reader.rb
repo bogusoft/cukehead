@@ -27,7 +27,18 @@ module Cukehead
     # Returns nil if no match is found.
     #
     def cucumber_features_node
-      REXML::XPath.first(@mmdoc, '//node[attribute::TEXT="Cucumber features:"]')
+      # XPath is case-sensitive so I'm using the translate function as
+      # described in a blog post titled "Performing a Case In-sensitive
+      # search in an XML Document" by Harish Ranganathan
+      # http://geekswithblogs.net/ranganh/archive/2005/09/12/53520.aspx
+      #
+      # There may be functions in XPath version 2 that provide a better way
+      # to do case-insensitive search but as of this writing REXML only
+      # implements XPath 1.0.
+      #
+      # Because the search is for a specific string, only those characters
+      # need translated to lower case.
+      REXML::XPath.first(@mmdoc, '//node[translate(attribute::TEXT, "CUMBERFATS", "cumberfats")="cucumber features:"]')
     end
 
 
@@ -42,6 +53,7 @@ module Cukehead
       } unless node.nil?
       feature_nodes
     end
+
 
     def get_features
       result = Hash.new
