@@ -7,7 +7,7 @@
 </node>
 <node TEXT="Spec" POSITION="right">
 <node TEXT="Cucumber Features:">
-<node TEXT="Feature: Map">
+<node TEXT="Feature: CukeHead Map">
 <node TEXT="As a person learning or using Cucumber"/>
 <node TEXT="I want to view Cucumber features as a FreeMind mind map"/>
 <node TEXT="Scenario: Scenario Outline">

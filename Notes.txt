@@ -1,6 +1,11 @@
 ----------------------------------------------------------------------
+To make feature files from the CukeHead mind map:
 
-To run RSpec and see HTML output
+bin/cukehead cuke -m mm/CukeHead.mm
+
+----------------------------------------------------------------------
+
+To run RSpec and see HTML output:
 
 spec -fh spec/*_spec.rb > /tmp/specs.html && firefox /tmp/specs.html
 
