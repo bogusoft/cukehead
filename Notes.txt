@@ -1,4 +1,10 @@
 ----------------------------------------------------------------------
+To interactively debug a cucumber step definition file add the following
+line at the point in the file you want to start debugging:
+
+require 'rubygems'; require 'ruby-debug'; debugger
+
+----------------------------------------------------------------------
 To make feature files from the CukeHead mind map:
 
 bin/cukehead cuke -m mm/CukeHead.mm
