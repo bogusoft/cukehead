@@ -5,6 +5,7 @@ require 'date'
 require 'spec/rake/spectask'
 require 'rake/testtask'
 require 'rake/rdoctask'
+require 'cucumber/rake/task'
 
 GEM = 'cukehead'
 
@@ -62,7 +63,7 @@ task :make_spec do
 end
 
 
-task :default => [:unit_tests, :spec]
+task :default => [:unit_tests, :spec, :features]
 
 desc "run unit tests"
 Rake::TestTask.new("unit_tests") {|t|
@@ -82,3 +83,8 @@ Rake::RDocTask.new do |rd|
   #rd.options << '--line-numbers'
 end
 
+
+desc "Cucumber features"
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format pretty"
+end

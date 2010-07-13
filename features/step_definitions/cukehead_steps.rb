@@ -6,10 +6,10 @@ Given /^a feature file with:$/ do |text|
   @text = text
 end
 
+#require 'rubygems'; require 'ruby-debug'; debugger
 
 When /^I read the feature into a mind map$/ do
   @reader = Cukehead::FeatureReader.new
-  require 'rubygems'; require 'ruby-debug'; debugger
   @reader.extract_features 'testdata.feature', @text
 end
 
