@@ -42,17 +42,17 @@ module Cukehead
             case s
               when /^\@.*/i
                 tags = s.split(' ')
-              when /^Feature:*/i
+              when /^Feature:.*/i
                 @section.finish unless @section == nil
                 @section = FeatureSection.new(@builder, line, filename)
                 @section.set_tags tags
                 tags.clear
-              when /^Background:*/i
+              when /^Background:.*/i
                 @section.finish unless @section == nil
                 @section = BackgroundSection.new(@builder, line)
                 @section.set_tags tags
                 tags.clear
-              when /^Scenario:*/i
+              when /^(Scenario|Scenario Outline):.*/i
                 @section.finish unless @section == nil
                 @section = ScenarioSection.new(@builder, line)
                 @section.set_tags tags
