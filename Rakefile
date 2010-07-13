@@ -63,8 +63,6 @@ task :make_spec do
 end
 
 
-task :default => [:unit_tests, :spec, :features]
-
 desc "run unit tests"
 Rake::TestTask.new("unit_tests") {|t|
   t.pattern = 'test/*_test.rb'
@@ -88,3 +86,14 @@ desc "Cucumber features"
 Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts = "features --format pretty"
 end
+
+
+desc "Make feature files from CukeHead mind map"
+task 'cukehead' do
+  sh "bin/cukehead cuke -m mm/CukeHead.mm -o"
+end
+
+
+task :cuke => [:cukehead, :features]
+
+task :default => [:unit_tests, :spec, :cuke]

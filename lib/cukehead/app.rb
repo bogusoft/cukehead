@@ -106,7 +106,7 @@ module Cukehead
         @errors << 'No Cucumber features found in the mind map file.'
         @errors << 'Mind map may be missing a "Cucumber features:" node.'
       else
-        features.each_key {|filename| puts "Writing #{filename}"}
+        features.each_key {|filename| puts "Writing #{File.join(@features_path, filename)}"}
         writer.write_features features
         @errors << writer.errors unless writer.errors.empty?
       end

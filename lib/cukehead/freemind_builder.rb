@@ -28,6 +28,7 @@ module Cukehead
       @features_path = nil
       @features_node = cucumber_features_node
       @scenario_count = 0
+      @current_feature = nil
     end
 
 
@@ -62,6 +63,7 @@ module Cukehead
     # <tt>part</tt> - Cukehead::FeaturePart containing background description.
     #
     def add_background(part)
+      raise "No feature defined. Cannot add background section." if @current_feature.nil?
       new_node = @current_feature.add_element(new_node_element(part.title.strip, COLOR_BACKGROUND, FOLD_BACKGROUND))
       unless part.tags.empty?
         new_node.add_element(new_node_element('Tags: ' + part.tags.join(' '), COLOR_TAGS))
@@ -82,6 +84,7 @@ module Cukehead
     # <tt>part</tt> - Cukehead::FeaturePart containing scenario description.
     #
     def add_scenario(part)
+      raise "No feature defined. Cannot add scenario section." if @current_feature.nil?
       @scenario_count += 1
       @scenario_count.odd? ? color = COLOR_SCENARIO_1 : color = COLOR_SCENARIO_2
       new_node = @current_feature.add_element(new_node_element(part.title.strip, color, FOLD_SCENARIO))
