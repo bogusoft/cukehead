@@ -92,23 +92,35 @@ module Cukehead
 
 
     def read_mindmap
-      puts "Reading #{@mindmap_filename}"
-      @mindmap_reader = FreemindReader.new @mindmap_filename
+      puts "Reading #{@mindmap_filename}"      
+      begin
+        @mindmap_reader = FreemindReader.new @mindmap_filename
+      rescue => ex
+        @errors << 'Error in read_mindmap: ' + ex.message
+      end
     end
 
 
     def write_features
-      writer = FeatureWriter.new
-      writer.output_path = @features_path
-      writer.overwrite = @do_overwrite
-      features = @mindmap_reader.get_features
-      if features.empty?
-        @errors << 'No Cucumber features found in the mind map file.'
-        @errors << 'Mind map may be missing a "Cucumber features:" node.'
-      else
-        features.each_key {|filename| puts "Writing #{File.join(@features_path, filename)}"}
-        writer.write_features features
-        @errors << writer.errors unless writer.errors.empty?
+      if @mindmap_reader.nil?
+        @errors << "No mind map data."
+        return false
+      end
+      begin
+        writer = FeatureWriter.new
+        writer.output_path = @features_path
+        writer.overwrite = @do_overwrite
+        features = @mindmap_reader.get_features
+        if features.empty?
+          @errors << 'No Cucumber features found in the mind map file.'
+          @errors << 'Mind map may be missing a "Cucumber features:" node.'
+        else
+          features.each_key {|filename| puts "Writing #{File.join(@features_path, filename)}"}
+          writer.write_features features
+          @errors << writer.errors unless writer.errors.empty?
+        end
+      rescue => ex
+        @errors << 'Error in write_features: ' + ex.message
       end
     end
 
