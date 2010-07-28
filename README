@@ -27,6 +27,9 @@ command:
       Read a FreeMind mind map file and create Cucumber feature files.
 
 options:
+  -h or --help
+      Show the help text.
+
   -o or --overwrite
       Overwrite existing output file(s).
 

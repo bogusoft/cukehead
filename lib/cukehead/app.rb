@@ -204,21 +204,31 @@ Usage: cukehead command [options]
 
 command:  
   map
-      Read features and create a FreeMind mind map file.
+      Read Cucumber feature files and create a FreeMind mind map file.
+
+  cuke
+      Read a FreeMind mind map file and create Cucumber feature files.
 
 options:
+  -h or --help
+      Show this help message.
+
   -o or --overwrite
-      Overwrite existing output file.
+      Overwrite existing output file(s).
 
   -m FILENAME or --mm-filename FILENAME
-      Specify name of output file (default is mm/cukehead-output.mm).
+      map: Name of output file (default is mm/cukehead-output.mm).
+
+      cuke: Name of mind map file containing Cucumber features.
 
   -f PATH or --features-path PATH
-      Specify directory containing feature files to read
-      (default is directory named 'features' in current directory).
+      map: Directory containing feature files to read (default is directory
+      named 'features' in current directory).
+
+      cuke: Directory feature files will be written to.
 
   -s FILENAME or --source-mm FILENAME
-      Specify a FreeMind mind map file to use as a template for creating
+      map: FreeMind mind map file to use as a template for creating
       the output file. If the template contains a node with the text
       'Cucumber features:' then the feature nodes will be inserted there.
 

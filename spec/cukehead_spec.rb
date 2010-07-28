@@ -32,6 +32,23 @@ describe "cukehead" do
   end
 
 
+  it "should include available commands and options in the help message" do
+    result = run_cukehead
+    result.should match /\bmap\b/
+    result.should match /\bcuke\b/
+    result.should match /.*--help\b/
+    result.should include ' -h '
+    result.should match /.*--overwrite\b/
+    result.should include ' -o '
+    result.should include ' --mm-filename '
+    result.should include ' -m '
+    result.should include ' --features-path '
+    result.should include ' -f '
+    result.should include ' --source-mm '
+    result.should include ' -s '
+  end
+
+
   it "should display a help message if '--help' command line argument is given" do
     result = run_cukehead '--help'
     result.should match /.*Usage:.*/
