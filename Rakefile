@@ -14,7 +14,7 @@ spec = Gem::Specification.new do |s|
   s.version = "0.1.1"
   s.author = "Bill Melvin"
   s.email = "bill@bogusoft.com"
-  s.homepage = "http://www.bogusoft.com"
+  s.homepage = "http://www.bogusoft.com/cukehead/"
   s.description = s.summary = "A gem that creates a FreeMind mind map from Cucumber feature files and vice versa."
   
   s.platform = Gem::Platform::RUBY
