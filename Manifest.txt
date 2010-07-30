@@ -1,6 +1,7 @@
 LICENSE
 README
 Rakefile
+bin/cukehead
 lib/cukehead.rb
 lib/cukehead/app.rb
 lib/cukehead/feature_file_section.rb

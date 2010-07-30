@@ -31,6 +31,8 @@ spec = Gem::Specification.new do |s|
 
   #s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
 
+  s.executables = ["cukehead"]
+
   files = []
   File.open('Manifest.txt', 'r') {|f| f.each {|line| files << line.strip}}
   s.files = files
