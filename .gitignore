@@ -3,5 +3,4 @@ tmp/*
 doc/rdocs/*
 mm/cukehead-output.mm
 pkg/*
-cukehead.gemspec
 features/cukehead_map.feature
