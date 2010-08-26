@@ -43,8 +43,8 @@ end
 desc "Run specs"
 Spec::Rake::SpecTask.new do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
-  #t.spec_opts = %w(-fs --color)
-  t.spec_opts = %w(-fs --color --debug)
+  t.spec_opts = %w(-fs --color)
+  t.spec_opts.push '--debug' unless RUBY_PLATFORM =~ /(:?mswin|mingw)/
 end
 
 
@@ -92,7 +92,7 @@ end
 
 desc "Make feature files from CukeHead mind map"
 task 'cukehead' do
-  sh "bin/cukehead cuke -m mm/CukeHead.mm -o"
+  sh "ruby bin/cukehead cuke -m mm/CukeHead.mm -o"
 end
 
 

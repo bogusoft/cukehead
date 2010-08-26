@@ -5,6 +5,7 @@ $:.push File.join(File.dirname(__FILE__), '..', 'lib')
 $testing_tmp = File.expand_path(File.join(File.dirname(__FILE__), '..', 'tmp'))
 
 $cukehead_bin = File.expand_path(File.join(File.dirname(__FILE__), '..', 'bin', 'cukehead'))
+$cukehead_bin = "ruby #{$cukehead_bin}" if RUBY_PLATFORM =~ /(:?mswin|mingw)/
 
 # Fake FreeMind data with one feature with background and two scenarios.
 $testing_freemind_data = <<xxx

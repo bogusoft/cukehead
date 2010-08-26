@@ -30,10 +30,10 @@ module Cukehead
     end
 
     it "should save the path to the features directory" do
-      filename = '/tmp/features/some.feature'
+      filename = File.join($testing_tmp, 'features', 'some.feature')
       @builder.send :add_features_path, filename
       result = @builder.send :features_path_text
-      result.should eql "[path: /tmp/features]"
+      result.should eql "[path: #{File.dirname(filename)}]"
     end
 
     it "should create new XML node element with text, color, and folded attributes" do
