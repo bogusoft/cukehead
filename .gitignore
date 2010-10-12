@@ -4,3 +4,4 @@ doc/rdocs/*
 mm/cukehead-output.mm
 pkg/*
 features/cukehead_map.feature
+.bundle

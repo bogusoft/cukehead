@@ -1,4 +1,5 @@
 require 'rubygems' unless ENV['NO_RUBYGEMS']
+require 'bundler/setup'
 require 'rake/gempackagetask'
 require 'rubygems/specification'
 require 'date'
