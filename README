@@ -53,16 +53,26 @@ Cucumber project: http://cukes.info/
 
 FreeMind project: http://freemind.sourceforge.net/wiki/index.php/Main_Page
 
+
 === Some Projects on GitHub that use Cucumber
 
-chits
-cucumber
-engineyard
-jnicklas
-kathrynaaker/eggs
-lahaina
-mojombo
-radiant
-technicalpickles
-webjam
+http://github.com/alisonperez/chits
+
+http://github.com/aslakhellesoy/cucumber
+
+http://github.com/engineyard/rails_dev_directory
+
+http://github.com/jnicklas/carrierwave.git
+
+http://github.com/kathrynaaker/eggs
+
+http://github.com/robconery/lahaina
+
+http://github.com/mojombo/jekyll
+
+http://github.com/radiant/radiant
+
+http://github.com/technicalpickles/jeweler
+
+http://github.com/webjam/webjam
 

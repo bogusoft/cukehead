@@ -1,0 +1,36 @@
+
+----------------------------------------------------------------------
+2010-10-14
+
+
+[a_test_mindmap.mm - Created by FreeMind version 0.7.1 (from Ubuntu 9.10 repository)]
+<map version="0.7.1">
+<node TEXT="New Mindmap">
+<node TEXT="A node" POSITION="right">
+<node TEXT="A node with bold text">
+<edge WIDTH="thin"/>
+<font NAME="SansSerif" BOLD="true" SIZE="12"/>
+</node>
+<node COLOR="#ff0000" TEXT="A node with red text"/>
+<node TEXT="A node with&#xa;a second line&#xa;and a third line of text."/>
+</node>
+</node>
+</map>
+
+[a_test_mindmap.mm - Created by FreeMind version 0.9.0 RC7 (from Debian package)]
+<map version="0.9.0">
+<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<node CREATED="1287059159121" ID="ID_1426238566" MODIFIED="1287059159121" TEXT="New Mindmap">
+<node CREATED="1287059165638" ID="ID_1980662301" MODIFIED="1287059927156" POSITION="right" TEXT="A node">
+<node CREATED="1287059833397" ID="ID_1588029909" MODIFIED="1287059861310" TEXT="A node with bold text">
+<font BOLD="true" NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#ff0000" CREATED="1287059931510" ID="ID_227073631" MODIFIED="1287060013709" TEXT="A node with red text."/>
+<node CREATED="1287059866835" ID="ID_1288894664" MODIFIED="1287059913361" TEXT="A node with&#xa;a second line&#xa;and a third line of text"/>
+</node>
+</node>
+</map>
+
+
+----------------------------------------------------------------------
+
