@@ -20,7 +20,6 @@ module Cukehead
     attr_reader :feature_reader
 
     def initialize
-      @command = ''
       @features_path = File.join(Dir.getwd, 'features')
       @mindmap_filename = File.join(Dir.getwd, 'mm', 'cukehead-output.mm')
       @mindmap_template_filename = ''
@@ -59,12 +58,12 @@ module Cukehead
       @feature_reader = FeatureReader.new get_source_xml
       search_path = File.join @features_path, '*.feature'
       puts "Reading #{search_path}"
-      Dir[search_path].sort.each {|filename|
-        File.open(filename, 'r') {|f|
+      Dir[search_path].sort.each do |filename|
+        File.open(filename, 'r') do |f|
           text = f.readlines
           @feature_reader.extract_features filename, text #unless text.nil?
-        }
-      }
+        end
+      end
     end
 
 
@@ -130,9 +129,9 @@ module Cukehead
         nil
       else
         text = nil
-        File.open(@mindmap_template_filename, 'r') {|f|
+        File.open(@mindmap_template_filename, 'r') do |f|
           text = f.readlines
-        }
+        end
         text.join
       end
     end
@@ -172,9 +171,9 @@ module Cukehead
       # command line arguments. Specific option takes precidence.
       ARGV.each do |a|
         if a == 'map'
-          @command = 'map' if @command == ''
+          @command = 'map' unless @command 
         elsif a == 'cuke'
-          @command = 'cuke' if @command == ''
+          @command = 'cuke' unless @command 
         elsif a.slice(-9, 9) == '/features'
           fp = a if fp.empty?
         elsif a.slice(-3, 3) == '.mm'
