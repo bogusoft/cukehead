@@ -1,3 +1,32 @@
+# cukehead
+
+### Update 2023-07-17
+
+This project is a learning exercise and a proof-of-concept experiment that ended in 2011.
+
+The *learning* part was **Ruby** and **Cucumber**.
+
+The *proof-of-concept* part was to explore representing **cucumber features in a mind map**, with a bi-directional capability.
+
+When I was working on this project I knew that the implementation was tied too closely to the XML format used by FreeMind at the time. My plan, assuming that the initial POC proved useful, was to add an abstraction layer over the mind map implementation. That never came to be.
+
+I took a new job in 2011 that required the bulk of my time, and it was not a Ruby job.
+
+This project **will not work** with recent (like, after 2011) versions of FreeMind.
+
+I'm leaving it here for reference only.
+
+*Bill Melvin*
+
+---
+
+![cukehead logo image](readme_images/cukehead-mindmap-logo-2.png)
+*I also made a logo using Inkscape.*
+
+---
+
+### Original README:
+
 == cukehead
 
 === Introduction
