@@ -78,30 +78,25 @@ options:
 
 === Resources
 
-Cucumber project: http://cukes.info/
+Cucumber project: https://cucumber.io/
 
-FreeMind project: http://freemind.sourceforge.net/wiki/index.php/Main_Page
-
+FreeMind project: https://en.wikipedia.org/wiki/FreeMind
 
 === Some Projects on GitHub that use Cucumber
 
-http://github.com/alisonperez/chits
+https://github.com/alisonperez/chits
 
-http://github.com/aslakhellesoy/cucumber
+https://github.com/aslakhellesoy/cucumber-rails-test
 
-http://github.com/engineyard/rails_dev_directory
+https://github.com/engineyard/rails_dev_directory
 
-http://github.com/jnicklas/carrierwave.git
+https://github.com/jnicklas/carrierwave.git
 
-http://github.com/kathrynaaker/eggs
+https://github.com/mojombo/jekyll
 
-http://github.com/robconery/lahaina
+https://github.com/radiant/radiant
 
-http://github.com/mojombo/jekyll
+https://github.com/technicalpickles/jeweler
 
-http://github.com/radiant/radiant
-
-http://github.com/technicalpickles/jeweler
-
-http://github.com/webjam/webjam
+https://github.com/webjam/webjam
 
